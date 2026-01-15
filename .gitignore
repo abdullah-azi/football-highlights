@@ -46,9 +46,8 @@ output/
 *.avi
 
 # Debug logs
-debug/*.log
-debug/*.json
-debug/*.txt
+**/debug/
+*.log
 
 # Test outputs
 tests/*.txt
