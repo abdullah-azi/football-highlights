@@ -1,0 +1,75 @@
+{
+  "config": {
+    "skip_seconds": 0,
+    "max_duration_seconds": 600,
+    "output_path": "/content/drive/MyDrive/football/final/output/Highlight_20260115_175852.mp4",
+    "timestamp": "20260115_175852"
+  },
+  "processing": {
+    "written_frames": 1146,
+    "switches": 0,
+    "errors": 0,
+    "start_time": "2026-01-15T17:58:52.789777",
+    "end_time": "2026-01-15T18:08:53.090240",
+    "processing_time_sec": 600.2107939720154,
+    "output_fps": 29.997536208929482,
+    "camera_usage": {
+      "0": 1146
+    },
+    "switch_events": []
+  },
+  "errors": [],
+  "detection_stats": {
+    "total_frames": 1146,
+    "detections_found": 375,
+    "detections_lost": 771,
+    "detections_filtered": 0,
+    "total_inference_time_ms": 29887.396574020386,
+    "min_inference_ms": 20.7059383392334,
+    "max_inference_ms": 54.32891845703125,
+    "last_reset_time": 1768500017.5984733,
+    "avg_inference_ms": 26.079752682391263,
+    "detection_rate": 0.32722513089005234
+  },
+  "sticky_stats": {
+    "total_updates": 1146,
+    "accepted": 358,
+    "hold_last": 284,
+    "jump_rejected": 0,
+    "low_conf_hold": 0,
+    "low_conf_lost": 3,
+    "fully_lost": 501,
+    "total_jump_distance": 8365.846180358561,
+    "max_jump_distance": 411.97144765511865,
+    "total_iou": 112.96959019316118,
+    "iou_count": 255,
+    "last_reset_time": 1768500017.5985765,
+    "acceptance_rate": 0.31239092495637,
+    "hold_rate": 0.24781849912739964,
+    "avg_iou": 0.4430180007574948,
+    "avg_jump_distance": 23.36828541999598
+  },
+  "switcher_stats": {
+    "total_updates": 1146,
+    "switches": 0,
+    "stays": 1146,
+    "state_found": 353,
+    "state_held": 284,
+    "state_lost": 509,
+    "zone_changes": 8,
+    "cooldown_blocks": 0,
+    "miss_threshold_blocks": 0,
+    "no_exit_zone_blocks": 0,
+    "trajectory_blocks": 190,
+    "prob_threshold_blocks": 0,
+    "zones_visited": {
+      "LEFT_BOTTOM": 75,
+      "LEFT": 486
+    },
+    "switches_by_zone": {},
+    "switches_by_camera": {},
+    "last_reset_time": 1768500017.5986612,
+    "switch_rate": 0.0,
+    "stay_rate": 1.0
+  }
+}

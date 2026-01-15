@@ -1,0 +1,61 @@
+[2026-01-15 18:25:20.596] [INFO] Starting highlight output generation: Highlight_20260115_182520.mp4
+[2026-01-15 18:25:20.598] [INFO] Configuration: skip=0s, max_dur=300s
+[2026-01-15 18:25:20.683] [INFO] Opened 2 cameras for output
+[2026-01-15 18:25:20.683] [INFO] Camera 0: 1920x1080 @ 30.00fps, skip=0 frames
+[2026-01-15 18:25:20.683] [INFO] Camera 1: 1920x1080 @ 30.00fps, skip=0 frames
+[2026-01-15 18:25:20.922] [INFO] All cameras synchronized after skip
+[2026-01-15 18:25:20.923] [INFO] Trackers and statistics reset
+[2026-01-15 18:25:20.923] [INFO] Starting Phase 0: Startup camera selection
+[2026-01-15 18:25:20.923] [INFO] Config: scan_frames=900, min_detections=3, conf_threshold=0.12
+[2026-01-15 18:26:02.442] [INFO] Camera 0 scan: detections=286, avg_conf=0.66, frames_read=900
+[2026-01-15 18:26:45.125] [INFO] Camera 1 scan: detections=539, avg_conf=0.63, frames_read=900
+[2026-01-15 18:26:45.126] [INFO] Selected camera 0 with 286 detections, avg_conf=0.66
+[2026-01-15 18:26:45.128] [INFO] Trackers and statistics reset
+[2026-01-15 18:26:45.128] [INFO] Phase 0 complete: selected camera 0, duration=84.2s
+[2026-01-15 18:26:45.129] [INFO] Starting highlight video generation
+[2026-01-15 18:26:45.129] [INFO] Starting camera: 0 (RIGHT_CAM)
+[2026-01-15 18:26:45.276] [INFO] Video writer initialized: 1920x1080 @ 30.00fps
+[2026-01-15 18:26:50.197] [INFO] Progress: 88.9s/300s, 22 frames, 22 written, 0 switches
+[2026-01-15 18:26:55.746] [INFO] Progress: 93.7s/300s, 32 frames, 32 written, 0 switches
+[2026-01-15 18:27:00.979] [INFO] Progress: 99.2s/300s, 42 frames, 42 written, 0 switches
+[2026-01-15 18:27:06.703] [INFO] Progress: 105.0s/300s, 58 frames, 58 written, 0 switches
+[2026-01-15 18:27:12.243] [INFO] Progress: 110.6s/300s, 66 frames, 66 written, 0 switches
+[2026-01-15 18:27:17.606] [INFO] Progress: 116.2s/300s, 80 frames, 80 written, 0 switches
+[2026-01-15 18:27:22.625] [INFO] Progress: 120.4s/300s, 90 frames, 90 written, 0 switches
+[2026-01-15 18:27:27.653] [INFO] Progress: 126.9s/300s, 99 frames, 99 written, 0 switches
+[2026-01-15 18:27:31.998] [INFO] Synced camera 1 to frame 110 before switch
+[2026-01-15 18:27:31.999] [INFO] SWITCH: t=130.1s, frame=110, 0->1, zone=LEFT_BOTTOM, prob=0.75
+[2026-01-15 18:27:32.822] [INFO] Progress: 131.4s/300s, 112 frames, 111 written, 1 switches
+[2026-01-15 18:27:38.939] [INFO] Progress: 136.7s/300s, 122 frames, 121 written, 1 switches
+[2026-01-15 18:27:44.108] [INFO] Progress: 142.7s/300s, 134 frames, 133 written, 1 switches
+[2026-01-15 18:27:50.427] [INFO] Progress: 148.4s/300s, 148 frames, 147 written, 1 switches
+[2026-01-15 18:27:55.702] [INFO] Progress: 154.0s/300s, 156 frames, 155 written, 1 switches
+[2026-01-15 18:28:01.304] [INFO] Progress: 159.8s/300s, 172 frames, 171 written, 1 switches
+[2026-01-15 18:28:07.808] [INFO] Progress: 165.6s/300s, 182 frames, 181 written, 1 switches
+[2026-01-15 18:28:13.028] [INFO] Progress: 171.6s/300s, 196 frames, 195 written, 1 switches
+[2026-01-15 18:28:19.337] [INFO] Progress: 177.1s/300s, 208 frames, 207 written, 1 switches
+[2026-01-15 18:28:24.564] [INFO] Progress: 183.2s/300s, 218 frames, 217 written, 1 switches
+[2026-01-15 18:28:29.695] [INFO] Progress: 188.1s/300s, 230 frames, 229 written, 1 switches
+[2026-01-15 18:28:35.284] [INFO] Progress: 192.8s/300s, 238 frames, 237 written, 1 switches
+[2026-01-15 18:28:40.978] [INFO] Progress: 199.5s/300s, 252 frames, 251 written, 1 switches
+[2026-01-15 18:28:47.022] [INFO] Progress: 205.0s/300s, 264 frames, 263 written, 1 switches
+[2026-01-15 18:28:52.496] [INFO] Progress: 211.2s/300s, 274 frames, 273 written, 1 switches
+[2026-01-15 18:28:57.536] [INFO] Progress: 216.8s/300s, 287 frames, 286 written, 1 switches
+[2026-01-15 18:29:04.266] [INFO] Progress: 221.8s/300s, 296 frames, 295 written, 1 switches
+[2026-01-15 18:29:09.298] [INFO] Progress: 227.8s/300s, 310 frames, 309 written, 1 switches
+[2026-01-15 18:29:15.457] [INFO] Progress: 233.4s/300s, 322 frames, 321 written, 1 switches
+[2026-01-15 18:29:21.123] [INFO] Progress: 239.8s/300s, 334 frames, 333 written, 1 switches
+[2026-01-15 18:29:26.433] [INFO] Progress: 244.8s/300s, 346 frames, 345 written, 1 switches
+[2026-01-15 18:29:32.263] [INFO] Progress: 250.6s/300s, 356 frames, 355 written, 1 switches
+[2026-01-15 18:29:38.037] [INFO] Progress: 256.5s/300s, 370 frames, 369 written, 1 switches
+[2026-01-15 18:29:43.547] [INFO] Progress: 261.5s/300s, 380 frames, 379 written, 1 switches
+[2026-01-15 18:29:49.137] [INFO] Progress: 267.7s/300s, 392 frames, 391 written, 1 switches
+[2026-01-15 18:29:54.791] [INFO] Progress: 273.1s/300s, 404 frames, 403 written, 1 switches
+[2026-01-15 18:29:59.919] [INFO] Progress: 278.2s/300s, 414 frames, 413 written, 1 switches
+[2026-01-15 18:30:05.401] [INFO] Progress: 283.9s/300s, 426 frames, 425 written, 1 switches
+[2026-01-15 18:30:10.577] [INFO] Progress: 288.8s/300s, 436 frames, 435 written, 1 switches
+[2026-01-15 18:30:16.174] [INFO] Progress: 294.6s/300s, 448 frames, 447 written, 1 switches
+[2026-01-15 18:30:21.590] [INFO] Progress: 299.9s/300s, 460 frames, 459 written, 1 switches
+[2026-01-15 18:30:21.590] [INFO] Reached MAX_DUR limit: 300s
+[2026-01-15 18:30:21.600] [INFO] Highlight generation complete: 459 frames in 300.9s
+[2026-01-15 18:30:21.600] [INFO] Results: switches=1, errors=0

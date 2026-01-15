@@ -1,0 +1,24 @@
+[2026-01-14 21:23:01.768] [INFO] Starting highlight output generation: Highlight_20260114_212301.mp4
+[2026-01-14 21:23:01.769] [INFO] Configuration: skip=0s, max_dur=300s
+[2026-01-14 21:23:01.852] [INFO] Opened 2 cameras for output
+[2026-01-14 21:23:01.853] [INFO] Camera 0: 1920x1080 @ 30.00fps, skip=0 frames
+[2026-01-14 21:23:01.853] [INFO] Camera 1: 1920x1080 @ 30.00fps, skip=0 frames
+[2026-01-14 21:23:02.089] [INFO] All cameras synchronized after skip
+[2026-01-14 21:23:02.091] [INFO] Trackers and statistics reset
+[2026-01-14 21:23:02.091] [INFO] Starting Phase 0: Startup camera selection
+[2026-01-14 21:23:02.091] [INFO] Config: scan_frames=900, min_detections=3, conf_threshold=0.12
+[2026-01-14 21:23:43.225] [INFO] Camera 0 scan: detections=316, avg_conf=0.61, frames_read=900
+[2026-01-14 21:24:25.202] [INFO] Camera 1 scan: detections=563, avg_conf=0.61, frames_read=900
+[2026-01-14 21:24:25.204] [INFO] Selected camera 0 with 316 detections, avg_conf=0.61
+[2026-01-14 21:24:25.207] [INFO] Trackers and statistics reset
+[2026-01-14 21:24:25.207] [INFO] Phase 0 complete: selected camera 0, duration=83.1s
+[2026-01-14 21:24:25.207] [INFO] Starting highlight video generation
+[2026-01-14 21:24:25.208] [INFO] Starting camera: 0 (RIGHT_CAM)
+[2026-01-14 21:24:25.356] [INFO] Video writer initialized: 1920x1080 @ 30.00fps
+[2026-01-14 21:24:30.273] [INFO] Progress: 88.3s/300s, 81 frames, 81 written, 0 switches
+[2026-01-14 21:24:32.854] [INFO] SWITCH: t=90.9s, frame=110, 0->1, zone=LEFT_BOTTOM, prob=0.75
+[2026-01-14 21:24:35.283] [INFO] Progress: 93.4s/300s, 144 frames, 143 written, 1 switches
+[2026-01-14 21:24:40.300] [INFO] Progress: 98.4s/300s, 227 frames, 226 written, 1 switches
+[2026-01-14 21:24:41.187] [WARNING] Processing interrupted at frame 242
+[2026-01-14 21:24:41.206] [INFO] Highlight generation complete: 240 frames in 99.3s
+[2026-01-14 21:24:41.206] [INFO] Results: switches=1, errors=0

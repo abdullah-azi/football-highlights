@@ -1,0 +1,154 @@
+{
+  "summary": {
+    "filename": "right_full.mov",
+    "file_size": "3.76 GB",
+    "file_path": "D:\\New folder\\football\\final\\input\\right_full.mov",
+    "duration": "1h 1m 20s",
+    "bitrate": "8.77 Mbps",
+    "resolution": "1920x1080",
+    "resolution_name": "1080p Full HD",
+    "frame_rate": "29.999 fps",
+    "video_codec": "hevc",
+    "audio_codec": "aac",
+    "audio_channels": "2 channels (stereo)",
+    "sample_rate": "48.0 kHz"
+  },
+  "file": {
+    "name": "right_full.mov",
+    "path": "D:\\New folder\\football\\final\\input\\right_full.mov",
+    "size": {
+      "bytes": 4036174001,
+      "kb": 3941576.17,
+      "mb": 3849.2,
+      "gb": 3.759,
+      "human_readable": "3.76 GB"
+    }
+  },
+  "container": {
+    "format": {
+      "name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "full_name": "QuickTime / MOV"
+    },
+    "duration": {
+      "seconds": 3680.32,
+      "formatted": "01:01:20.320",
+      "human_readable": "1h 1m 20s"
+    },
+    "size": {
+      "bytes": 4036174001,
+      "kb": 3941576.17,
+      "mb": 3849.2,
+      "gb": 3.759,
+      "human_readable": "3.76 GB"
+    },
+    "bitrate": {
+      "bps": 8773528,
+      "kbps": 8773.53,
+      "mbps": 8.774,
+      "human_readable": "8.77 Mbps"
+    },
+    "streams": {
+      "total": 2,
+      "programs": 0
+    }
+  },
+  "video_streams": [
+    {
+      "codec": {
+        "name": "hevc",
+        "full_name": "H.265 / HEVC (High Efficiency Video Coding)"
+      },
+      "resolution": {
+        "width": 1920,
+        "height": 1080,
+        "resolution": "1920x1080",
+        "name": "1080p Full HD",
+        "total_pixels": 2073600
+      },
+      "aspect_ratio": {
+        "display": null,
+        "pixel": null
+      },
+      "frame_rate": {
+        "fps": 29.999,
+        "raw": "1839650/61323",
+        "r_frame_rate": "30/1",
+        "human_readable": "29.999 fps"
+      },
+      "bitrate": {
+        "bps": 8581230,
+        "kbps": 8581.23,
+        "mbps": 8.581,
+        "human_readable": "8.58 Mbps"
+      },
+      "duration": {
+        "seconds": 3679.28,
+        "formatted": "01:01:19.280",
+        "human_readable": "1h 1m 19s"
+      },
+      "total_frames": "110379",
+      "color": {
+        "pixel_format": "yuv420p10le",
+        "color_space": "bt2020nc",
+        "color_range": "tv",
+        "color_primaries": "bt2020",
+        "transfer_characteristics": null
+      },
+      "rotation": {
+        "degrees": 0,
+        "human_readable": "No rotation"
+      },
+      "raw_tags": {
+        "handler_name": "Core Media Video",
+        "vendor_id": "FFMP",
+        "encoder": "HEVC"
+      }
+    }
+  ],
+  "audio_streams": [
+    {
+      "codec": {
+        "name": "aac",
+        "full_name": "AAC (Advanced Audio Coding)"
+      },
+      "sample_rate": {
+        "hz": 48000,
+        "human_readable": "48.0 kHz"
+      },
+      "channels": {
+        "count": 2,
+        "layout": "stereo",
+        "human_readable": "2 channels (stereo)"
+      },
+      "bitrate": {
+        "bps": 185619,
+        "kbps": 185.62,
+        "mbps": 0.186,
+        "human_readable": "185.62 Kbps"
+      },
+      "duration": {
+        "seconds": 3680.32,
+        "formatted": "01:01:20.320",
+        "human_readable": "1h 1m 20s"
+      },
+      "bit_depth": null,
+      "raw_tags": {
+        "handler_name": "Core Media Audio",
+        "vendor_id": "[0][0][0][0]"
+      }
+    }
+  ],
+  "other_streams": [],
+  "camera": {
+    "software": "Lavf62.3.100"
+  },
+  "raw_tags": {
+    "format": {
+      "major_brand": "qt  ",
+      "minor_version": "512",
+      "compatible_brands": "qt  ",
+      "encoder": "Lavf62.3.100"
+    }
+  },
+  "chapters": []
+}

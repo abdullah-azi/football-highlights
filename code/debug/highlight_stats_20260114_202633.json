@@ -1,0 +1,72 @@
+{
+  "config": {
+    "skip_seconds": 0,
+    "max_duration_seconds": 500,
+    "output_path": "/content/drive/MyDrive/football/final/output/Highlight_20260114_202633.mp4",
+    "timestamp": "20260114_202633"
+  },
+  "processing": {
+    "written_frames": 6500,
+    "switches": 0,
+    "errors": 9877,
+    "start_time": "2026-01-14T20:26:33.510570",
+    "end_time": "2026-01-14T20:34:53.646630",
+    "processing_time_sec": 500.04840326309204,
+    "output_fps": 29.997536208929482,
+    "camera_usage": {
+      "0": 6500
+    },
+    "switch_events": []
+  },
+  "errors": [],
+  "detection_stats": {
+    "total_frames": 6500,
+    "detections_found": 1908,
+    "detections_lost": 4592,
+    "detections_filtered": 0,
+    "total_inference_time_ms": 172543.47324371338,
+    "min_inference_ms": 20.254135131835938,
+    "max_inference_ms": 59.85593795776367,
+    "last_reset_time": 1768422476.6451771,
+    "avg_inference_ms": 26.54514972980206,
+    "detection_rate": 0.2935384615384615
+  },
+  "sticky_stats": {
+    "total_updates": 6500,
+    "accepted": 1684,
+    "hold_last": 1553,
+    "jump_rejected": 14,
+    "low_conf_hold": 29,
+    "low_conf_lost": 98,
+    "fully_lost": 3122,
+    "total_jump_distance": 47577.44681536882,
+    "max_jump_distance": 1259.4491320066884,
+    "total_iou": 625.7855643652861,
+    "iou_count": 1324,
+    "last_reset_time": 1768422476.64528,
+    "acceptance_rate": 0.2590769230769231,
+    "hold_rate": 0.23892307692307693,
+    "avg_iou": 0.4726477072245363,
+    "avg_jump_distance": 28.252640626703574
+  },
+  "switcher_stats": {
+    "total_updates": 0,
+    "switches": 0,
+    "stays": 0,
+    "state_found": 1684,
+    "state_held": 1596,
+    "state_lost": 3220,
+    "zone_changes": 0,
+    "cooldown_blocks": 0,
+    "miss_threshold_blocks": 0,
+    "no_exit_zone_blocks": 0,
+    "trajectory_blocks": 0,
+    "prob_threshold_blocks": 0,
+    "zones_visited": {},
+    "switches_by_zone": {},
+    "switches_by_camera": {},
+    "last_reset_time": 1768422476.645368,
+    "switch_rate": 0.0,
+    "stay_rate": 0.0
+  }
+}

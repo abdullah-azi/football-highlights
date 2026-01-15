@@ -1,0 +1,4 @@
+# Optional dependency for GPS/EXIF metadata extraction
+# Note: This requires ExifTool binary to be installed separately
+# Download from: https://exiftool.org/
+pyexiftool>=0.4.13

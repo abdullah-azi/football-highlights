@@ -1,0 +1,72 @@
+{
+  "config": {
+    "skip_seconds": 0,
+    "max_duration_seconds": 300,
+    "output_path": "/content/drive/MyDrive/football/final/output/Highlight_20260114_204134.mp4",
+    "timestamp": "20260114_204134"
+  },
+  "processing": {
+    "written_frames": 3310,
+    "switches": 0,
+    "errors": 2125,
+    "start_time": "2026-01-14T20:41:34.502864",
+    "end_time": "2026-01-14T20:46:34.600764",
+    "processing_time_sec": 300.0121760368347,
+    "output_fps": 29.997536208929482,
+    "camera_usage": {
+      "0": 3310
+    },
+    "switch_events": []
+  },
+  "errors": [],
+  "detection_stats": {
+    "total_frames": 3310,
+    "detections_found": 1313,
+    "detections_lost": 1997,
+    "detections_filtered": 0,
+    "total_inference_time_ms": 88652.1565914154,
+    "min_inference_ms": 20.4010009765625,
+    "max_inference_ms": 60.37473678588867,
+    "last_reset_time": 1768423379.5006635,
+    "avg_inference_ms": 26.783128879581692,
+    "detection_rate": 0.39667673716012086
+  },
+  "sticky_stats": {
+    "total_updates": 3310,
+    "accepted": 1206,
+    "hold_last": 853,
+    "jump_rejected": 6,
+    "low_conf_hold": 13,
+    "low_conf_lost": 48,
+    "fully_lost": 1184,
+    "total_jump_distance": 31029.51541396394,
+    "max_jump_distance": 1259.4491320066884,
+    "total_iou": 434.7912881704816,
+    "iou_count": 939,
+    "last_reset_time": 1768423379.5007918,
+    "acceptance_rate": 0.36435045317220544,
+    "hold_rate": 0.25770392749244714,
+    "avg_iou": 0.4630365156235161,
+    "avg_jump_distance": 25.72928309615584
+  },
+  "switcher_stats": {
+    "total_updates": 3310,
+    "switches": 0,
+    "stays": 3310,
+    "state_found": 1206,
+    "state_held": 872,
+    "state_lost": 1232,
+    "zone_changes": 0,
+    "cooldown_blocks": 0,
+    "miss_threshold_blocks": 0,
+    "no_exit_zone_blocks": 0,
+    "trajectory_blocks": 0,
+    "prob_threshold_blocks": 0,
+    "zones_visited": {},
+    "switches_by_zone": {},
+    "switches_by_camera": {},
+    "last_reset_time": 1768423379.5008872,
+    "switch_rate": 0.0,
+    "stay_rate": 1.0
+  }
+}

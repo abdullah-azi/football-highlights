@@ -1,0 +1,72 @@
+{
+  "config": {
+    "skip_seconds": 0,
+    "max_duration_seconds": 500,
+    "output_path": "/content/drive/MyDrive/football/final/output/Highlight_20260114_194430.mp4",
+    "timestamp": "20260114_194430"
+  },
+  "processing": {
+    "written_frames": 6454,
+    "switches": 0,
+    "errors": 9809,
+    "start_time": "2026-01-14T19:44:30.203795",
+    "end_time": "2026-01-14T19:52:50.478636",
+    "processing_time_sec": 500.03242325782776,
+    "output_fps": 29.997536208929482,
+    "camera_usage": {
+      "0": 6454
+    },
+    "switch_events": []
+  },
+  "errors": [],
+  "detection_stats": {
+    "total_frames": 6454,
+    "detections_found": 1897,
+    "detections_lost": 4557,
+    "detections_filtered": 0,
+    "total_inference_time_ms": 172035.09759902954,
+    "min_inference_ms": 20.32470703125,
+    "max_inference_ms": 129.93693351745605,
+    "last_reset_time": 1768419956.7634397,
+    "avg_inference_ms": 26.655577564150843,
+    "detection_rate": 0.29392624728850325
+  },
+  "sticky_stats": {
+    "total_updates": 6454,
+    "accepted": 1674,
+    "hold_last": 1545,
+    "jump_rejected": 16,
+    "low_conf_hold": 28,
+    "low_conf_lost": 93,
+    "fully_lost": 3098,
+    "total_jump_distance": 48450.91694312757,
+    "max_jump_distance": 1259.4491320066884,
+    "total_iou": 625.2323139510464,
+    "iou_count": 1323,
+    "last_reset_time": 1768419956.7635448,
+    "acceptance_rate": 0.2593740316083049,
+    "hold_rate": 0.23938642702200186,
+    "avg_iou": 0.47258678303178114,
+    "avg_jump_distance": 28.943200085500344
+  },
+  "switcher_stats": {
+    "total_updates": 0,
+    "switches": 0,
+    "stays": 0,
+    "state_found": 0,
+    "state_held": 0,
+    "state_lost": 0,
+    "zone_changes": 0,
+    "cooldown_blocks": 0,
+    "miss_threshold_blocks": 0,
+    "no_exit_zone_blocks": 0,
+    "trajectory_blocks": 0,
+    "prob_threshold_blocks": 0,
+    "zones_visited": {},
+    "switches_by_zone": {},
+    "switches_by_camera": {},
+    "last_reset_time": 1768419956.7636325,
+    "switch_rate": 0.0,
+    "stay_rate": 0.0
+  }
+}

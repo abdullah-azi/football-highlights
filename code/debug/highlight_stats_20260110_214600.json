@@ -1,0 +1,73 @@
+{
+  "output_path": "/content/drive/MyDrive/football/final/output/Highlight_20260110_214600.mp4",
+  "start_time": "2026-01-10T21:46:00.304812",
+  "configuration": {
+    "skip_seconds": 110,
+    "max_duration": 180,
+    "output_fps_fallback": 60
+  },
+  "processing": {
+    "frames_written": 3542,
+    "switches": 0,
+    "errors": 0,
+    "camera_usage": {
+      "1": 3542
+    },
+    "switch_events": [],
+    "processing_time_sec": 180.00288343429565,
+    "output_fps": 29.99440963212042
+  },
+  "end_time": "2026-01-10T21:49:00.337305",
+  "detection_stats": {
+    "total_frames": 3542,
+    "detections_found": 727,
+    "detections_lost": 2815,
+    "detections_filtered": 1,
+    "total_inference_time_ms": 51243.732213974,
+    "min_inference_ms": 9.263277053833008,
+    "max_inference_ms": 65.36602973937988,
+    "last_reset_time": 1768081561.3641298,
+    "avg_inference_ms": 14.467456864476002,
+    "detection_rate": 0.20525127046866176
+  },
+  "sticky_stats": {
+    "total_updates": 2841,
+    "accepted": 24,
+    "hold_last": 184,
+    "jump_rejected": 2,
+    "low_conf_hold": 0,
+    "low_conf_lost": 0,
+    "fully_lost": 2631,
+    "total_jump_distance": 12076.289491307687,
+    "max_jump_distance": 990.0126261821109,
+    "total_iou": 0.0,
+    "iou_count": 0,
+    "last_reset_time": 1768081561.3642805,
+    "acceptance_rate": 0.008447729672650475,
+    "hold_rate": 0.06476592749032031,
+    "avg_iou": 0.0,
+    "avg_jump_distance": 503.178728804487
+  },
+  "switcher_stats": {
+    "total_updates": 3542,
+    "switches": 0,
+    "stays": 3542,
+    "state_found": 217,
+    "state_held": 658,
+    "state_lost": 2667,
+    "zone_changes": 14,
+    "cooldown_blocks": 0,
+    "miss_threshold_blocks": 441,
+    "no_exit_zone_blocks": 1913,
+    "trajectory_blocks": 1188,
+    "prob_threshold_blocks": 0,
+    "zones_visited": {
+      "LEFT_BOTTOM": 1380
+    },
+    "switches_by_zone": {},
+    "switches_by_camera": {},
+    "last_reset_time": 1768081561.364409,
+    "switch_rate": 0.0,
+    "stay_rate": 1.0
+  }
+}

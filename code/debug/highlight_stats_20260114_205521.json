@@ -1,0 +1,150 @@
+{
+  "config": {
+    "skip_seconds": 0,
+    "max_duration_seconds": 300,
+    "output_path": "/content/drive/MyDrive/football/final/output/Highlight_20260114_205521.mp4",
+    "timestamp": "20260114_205521"
+  },
+  "processing": {
+    "written_frames": 3092,
+    "switches": 7,
+    "errors": 2459,
+    "start_time": "2026-01-14T20:55:21.515761",
+    "end_time": "2026-01-14T21:00:21.633590",
+    "processing_time_sec": 300.0284152030945,
+    "output_fps": 29.997536208929482,
+    "camera_usage": {
+      "0": 225,
+      "1": 2874
+    },
+    "switch_events": [
+      {
+        "frame": 110,
+        "time_sec": 93.41144919395447,
+        "from_cam": 0,
+        "to_cam": 1,
+        "zone": "LEFT_BOTTOM",
+        "exit_prob": 0.75,
+        "reason": "exit_confirmed"
+      },
+      {
+        "frame": 954,
+        "time_sec": 152.8031189441681,
+        "from_cam": 1,
+        "to_cam": 0,
+        "zone": "RIGHT_TOP",
+        "exit_prob": 0.75,
+        "reason": "exit_confirmed"
+      },
+      {
+        "frame": 969,
+        "time_sec": 154.17190265655518,
+        "from_cam": 0,
+        "to_cam": 1,
+        "zone": "LEFT",
+        "exit_prob": 0.7,
+        "reason": "ball_passing_through_zone"
+      },
+      {
+        "frame": 1202,
+        "time_sec": 169.8898105621338,
+        "from_cam": 1,
+        "to_cam": 0,
+        "zone": "RIGHT",
+        "exit_prob": 0.75,
+        "reason": "exit_confirmed"
+      },
+      {
+        "frame": 1236,
+        "time_sec": 171.8990023136139,
+        "from_cam": 0,
+        "to_cam": 1,
+        "zone": "LEFT",
+        "exit_prob": 0.75,
+        "reason": "exit_confirmed"
+      },
+      {
+        "frame": 1559,
+        "time_sec": 193.30622625350952,
+        "from_cam": 1,
+        "to_cam": 0,
+        "zone": "RIGHT",
+        "exit_prob": 0.75,
+        "reason": "exit_confirmed"
+      },
+      {
+        "frame": 1625,
+        "time_sec": 198.29674696922302,
+        "from_cam": 0,
+        "to_cam": 1,
+        "zone": "LEFT_BOTTOM",
+        "exit_prob": 0.75,
+        "reason": "exit_confirmed"
+      }
+    ]
+  },
+  "errors": [],
+  "detection_stats": {
+    "total_frames": 3099,
+    "detections_found": 1639,
+    "detections_lost": 1460,
+    "detections_filtered": 0,
+    "total_inference_time_ms": 85665.46964645386,
+    "min_inference_ms": 20.561933517456055,
+    "max_inference_ms": 133.436918258667,
+    "last_reset_time": 1768424208.5294828,
+    "avg_inference_ms": 27.642939543870234,
+    "detection_rate": 0.5288802839625686
+  },
+  "sticky_stats": {
+    "total_updates": 3099,
+    "accepted": 1357,
+    "hold_last": 1014,
+    "jump_rejected": 68,
+    "low_conf_hold": 27,
+    "low_conf_lost": 28,
+    "fully_lost": 605,
+    "total_jump_distance": 82821.74589881653,
+    "max_jump_distance": 1225.4915421069957,
+    "total_iou": 619.211712058652,
+    "iou_count": 1202,
+    "last_reset_time": 1768424208.529599,
+    "acceptance_rate": 0.43788318812520166,
+    "hold_rate": 0.32720232333010646,
+    "avg_iou": 0.515151174757614,
+    "avg_jump_distance": 61.03297413324726
+  },
+  "switcher_stats": {
+    "total_updates": 3099,
+    "switches": 7,
+    "stays": 3092,
+    "state_found": 1357,
+    "state_held": 1109,
+    "state_lost": 633,
+    "zone_changes": 19,
+    "cooldown_blocks": 98,
+    "miss_threshold_blocks": 0,
+    "no_exit_zone_blocks": 0,
+    "trajectory_blocks": 0,
+    "prob_threshold_blocks": 0,
+    "zones_visited": {
+      "LEFT_BOTTOM": 471,
+      "RIGHT_TOP": 22,
+      "LEFT": 99,
+      "RIGHT": 138
+    },
+    "switches_by_zone": {
+      "LEFT_BOTTOM": 2,
+      "RIGHT_TOP": 1,
+      "LEFT": 2,
+      "RIGHT": 2
+    },
+    "switches_by_camera": {
+      "0->1": 4,
+      "1->0": 3
+    },
+    "last_reset_time": 1768424208.52969,
+    "switch_rate": 0.002258793159083575,
+    "stay_rate": 0.9977412068409164
+  }
+}

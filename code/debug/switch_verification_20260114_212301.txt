@@ -1,0 +1,49 @@
+================================================================================
+SWITCH VERIFICATION CHECKLIST
+================================================================================
+
+Source Log: highlight_output_20260114_212301.log
+Source JSON: highlight_stats_20260114_212301.json
+Total Switches: 1
+
+================================================================================
+
+INSTRUCTIONS:
+- For each switch below, check the 'FROM' camera video at the specified time
+- Verify that the ball is actually in the exit zone indicated
+- Verify that switching to the 'TO' camera makes sense
+- Mark as ACCURATE or INACCURATE
+
+================================================================================
+
+SWITCH #1
+--------------------------------------------------------------------------------
+Time: 01:30 (90.95 seconds)
+Frame: 110
+From Camera: 0 (RIGHT_CAM)
+To Camera: 1 (CAMERA_1)
+Exit Zone: LEFT_BOTTOM
+Exit Probability: 0.75
+Reason: exit_confirmed
+
+CHECK: Open video for Camera 0 (RIGHT_CAM)
+       Seek to time: 01:30 (90.95s)
+       Verify ball is in LEFT_BOTTOM zone
+       Verify switching to Camera 1 (CAMERA_1) is appropriate
+
+Result: [ ] ACCURATE  [ ] INACCURATE
+Notes: _________________________________________________________
+
+================================================================================
+
+SUMMARY
+--------------------------------------------------------------------------------
+Total switches: 1
+
+Switches by zone:
+  LEFT_BOTTOM: 1
+
+Switches by camera transition:
+  0 -> 1: 1
+
+================================================================================

@@ -1,0 +1,87 @@
+[2026-01-14 20:41:34.503] [INFO] Starting highlight output generation: Highlight_20260114_204134.mp4
+[2026-01-14 20:41:34.504] [INFO] Configuration: skip=0s, max_dur=300s
+[2026-01-14 20:41:34.587] [INFO] Opened 2 cameras for output
+[2026-01-14 20:41:34.588] [INFO] Camera 0: 1920x1080 @ 30.00fps, skip=0 frames
+[2026-01-14 20:41:34.588] [INFO] Camera 1: 1920x1080 @ 30.00fps, skip=0 frames
+[2026-01-14 20:41:34.833] [INFO] All cameras synchronized after skip
+[2026-01-14 20:41:34.834] [INFO] Trackers and statistics reset
+[2026-01-14 20:41:34.835] [INFO] Starting Phase 0: Startup camera selection
+[2026-01-14 20:41:34.835] [INFO] Config: scan_frames=900, min_detections=3, conf_threshold=0.12
+[2026-01-14 20:42:16.204] [INFO] Camera 0 scan: detections=318, avg_conf=0.61, frames_read=900
+[2026-01-14 20:42:59.494] [INFO] Camera 1 scan: detections=564, avg_conf=0.61, frames_read=900
+[2026-01-14 20:42:59.495] [INFO] Selected camera 0 with 318 detections, avg_conf=0.61
+[2026-01-14 20:42:59.500] [INFO] Trackers and statistics reset
+[2026-01-14 20:42:59.501] [INFO] Phase 0 complete: selected camera 0, duration=84.7s
+[2026-01-14 20:42:59.501] [INFO] Starting highlight video generation
+[2026-01-14 20:42:59.501] [INFO] Starting camera: 0 (RIGHT_CAM)
+[2026-01-14 20:42:59.649] [INFO] Video writer initialized: 1920x1080 @ 30.00fps
+[2026-01-14 20:43:01.621] [ERROR] Error in draw_ball_debug: OpenCV(4.12.0) :-1: error: (-5:Bad argument) in function 'circle'
+> Overload resolution failed:
+>  - Can't parse 'center'. Sequence item with index 0 has a wrong type
+>  - Can't parse 'center'. Sequence item with index 0 has a wrong type
+
+[2026-01-14 20:43:01.681] [ERROR] Error in draw_ball_debug: OpenCV(4.12.0) :-1: error: (-5:Bad argument) in function 'circle'
+> Overload resolution failed:
+>  - Can't parse 'center'. Sequence item with index 0 has a wrong type
+>  - Can't parse 'center'. Sequence item with index 0 has a wrong type
+
+[2026-01-14 20:43:01.740] [ERROR] Error in draw_ball_debug: OpenCV(4.12.0) :-1: error: (-5:Bad argument) in function 'circle'
+> Overload resolution failed:
+>  - Can't parse 'center'. Sequence item with index 0 has a wrong type
+>  - Can't parse 'center'. Sequence item with index 0 has a wrong type
+
+[2026-01-14 20:43:01.797] [ERROR] Error in draw_ball_debug: OpenCV(4.12.0) :-1: error: (-5:Bad argument) in function 'circle'
+> Overload resolution failed:
+>  - Can't parse 'center'. Sequence item with index 0 has a wrong type
+>  - Can't parse 'center'. Sequence item with index 0 has a wrong type
+
+[2026-01-14 20:43:01.874] [ERROR] Error in draw_ball_debug: OpenCV(4.12.0) :-1: error: (-5:Bad argument) in function 'circle'
+> Overload resolution failed:
+>  - Can't parse 'center'. Sequence item with index 0 has a wrong type
+>  - Can't parse 'center'. Sequence item with index 0 has a wrong type
+
+[2026-01-14 20:43:04.521] [INFO] Progress: 89.9s/300s, 84 frames, 84 written, 0 switches
+[2026-01-14 20:43:09.579] [INFO] Progress: 94.9s/300s, 157 frames, 157 written, 0 switches
+[2026-01-14 20:43:14.591] [INFO] Progress: 99.9s/300s, 233 frames, 233 written, 0 switches
+[2026-01-14 20:43:19.606] [INFO] Progress: 105.0s/300s, 321 frames, 321 written, 0 switches
+[2026-01-14 20:43:24.692] [INFO] Progress: 110.0s/300s, 391 frames, 391 written, 0 switches
+[2026-01-14 20:43:29.737] [INFO] Progress: 115.1s/300s, 473 frames, 473 written, 0 switches
+[2026-01-14 20:43:34.772] [INFO] Progress: 120.1s/300s, 562 frames, 562 written, 0 switches
+[2026-01-14 20:43:39.791] [INFO] Progress: 125.1s/300s, 625 frames, 625 written, 0 switches
+[2026-01-14 20:43:44.796] [INFO] Progress: 130.2s/300s, 710 frames, 710 written, 0 switches
+[2026-01-14 20:43:49.824] [INFO] Progress: 135.1s/300s, 795 frames, 795 written, 0 switches
+[2026-01-14 20:43:54.855] [INFO] Progress: 140.2s/300s, 860 frames, 860 written, 0 switches
+[2026-01-14 20:43:59.864] [INFO] Progress: 145.2s/300s, 946 frames, 946 written, 0 switches
+[2026-01-14 20:44:04.902] [INFO] Progress: 150.2s/300s, 1021 frames, 1021 written, 0 switches
+[2026-01-14 20:44:09.909] [INFO] Progress: 155.3s/300s, 1091 frames, 1091 written, 0 switches
+[2026-01-14 20:44:14.916] [INFO] Progress: 160.3s/300s, 1177 frames, 1177 written, 0 switches
+[2026-01-14 20:44:19.977] [INFO] Progress: 165.3s/300s, 1248 frames, 1248 written, 0 switches
+[2026-01-14 20:44:25.039] [INFO] Progress: 170.4s/300s, 1326 frames, 1326 written, 0 switches
+[2026-01-14 20:44:30.081] [INFO] Progress: 175.4s/300s, 1413 frames, 1413 written, 0 switches
+[2026-01-14 20:44:35.175] [INFO] Progress: 180.5s/300s, 1475 frames, 1475 written, 0 switches
+[2026-01-14 20:44:40.177] [INFO] Progress: 185.5s/300s, 1561 frames, 1561 written, 0 switches
+[2026-01-14 20:44:45.205] [INFO] Progress: 190.6s/300s, 1646 frames, 1646 written, 0 switches
+[2026-01-14 20:44:50.225] [INFO] Progress: 195.6s/300s, 1707 frames, 1707 written, 0 switches
+[2026-01-14 20:44:55.267] [INFO] Progress: 200.6s/300s, 1791 frames, 1791 written, 0 switches
+[2026-01-14 20:45:00.359] [INFO] Progress: 205.7s/300s, 1871 frames, 1871 written, 0 switches
+[2026-01-14 20:45:05.362] [INFO] Progress: 210.7s/300s, 1938 frames, 1938 written, 0 switches
+[2026-01-14 20:45:10.399] [INFO] Progress: 215.8s/300s, 2022 frames, 2022 written, 0 switches
+[2026-01-14 20:45:15.506] [INFO] Progress: 220.8s/300s, 2095 frames, 2095 written, 0 switches
+[2026-01-14 20:45:20.556] [INFO] Progress: 225.9s/300s, 2169 frames, 2169 written, 0 switches
+[2026-01-14 20:45:25.589] [INFO] Progress: 230.9s/300s, 2254 frames, 2254 written, 0 switches
+[2026-01-14 20:45:30.589] [INFO] Progress: 235.9s/300s, 2321 frames, 2321 written, 0 switches
+[2026-01-14 20:45:35.616] [INFO] Progress: 241.0s/300s, 2404 frames, 2404 written, 0 switches
+[2026-01-14 20:45:40.652] [INFO] Progress: 246.0s/300s, 2488 frames, 2488 written, 0 switches
+[2026-01-14 20:45:45.687] [INFO] Progress: 251.0s/300s, 2547 frames, 2547 written, 0 switches
+[2026-01-14 20:45:50.721] [INFO] Progress: 256.1s/300s, 2631 frames, 2631 written, 0 switches
+[2026-01-14 20:45:55.770] [INFO] Progress: 261.1s/300s, 2718 frames, 2718 written, 0 switches
+[2026-01-14 20:46:00.799] [INFO] Progress: 266.2s/300s, 2782 frames, 2782 written, 0 switches
+[2026-01-14 20:46:05.832] [INFO] Progress: 271.2s/300s, 2867 frames, 2867 written, 0 switches
+[2026-01-14 20:46:10.834] [INFO] Progress: 276.2s/300s, 2945 frames, 2945 written, 0 switches
+[2026-01-14 20:46:15.870] [INFO] Progress: 281.2s/300s, 3015 frames, 3015 written, 0 switches
+[2026-01-14 20:46:20.919] [INFO] Progress: 286.3s/300s, 3101 frames, 3101 written, 0 switches
+[2026-01-14 20:46:26.009] [INFO] Progress: 291.3s/300s, 3172 frames, 3172 written, 0 switches
+[2026-01-14 20:46:31.040] [INFO] Progress: 296.4s/300s, 3249 frames, 3249 written, 0 switches
+[2026-01-14 20:46:34.600] [INFO] Reached MAX_DUR limit: 300s
+[2026-01-14 20:46:34.616] [INFO] Highlight generation complete: 3310 frames in 300.0s
+[2026-01-14 20:46:34.616] [INFO] Results: switches=0, errors=2125

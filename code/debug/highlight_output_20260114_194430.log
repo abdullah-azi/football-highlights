@@ -1,0 +1,107 @@
+[2026-01-14 19:44:30.204] [INFO] Starting highlight output generation: Highlight_20260114_194430.mp4
+[2026-01-14 19:44:30.205] [INFO] Configuration: skip=0s, max_dur=500s
+[2026-01-14 19:44:30.445] [INFO] Opened 2 cameras for output
+[2026-01-14 19:44:30.445] [INFO] Camera 0: 1920x1080 @ 30.00fps, skip=0 frames
+[2026-01-14 19:44:30.445] [INFO] Camera 1: 1920x1080 @ 30.00fps, skip=0 frames
+[2026-01-14 19:44:31.258] [INFO] All cameras synchronized after skip
+[2026-01-14 19:44:31.260] [INFO] Trackers and statistics reset
+[2026-01-14 19:44:31.260] [INFO] Starting Phase 0: Startup camera selection
+[2026-01-14 19:44:31.260] [INFO] Config: scan_frames=900, min_detections=3, conf_threshold=0.12
+[2026-01-14 19:45:14.502] [INFO] Camera 0 scan: detections=314, avg_conf=0.62, frames_read=900
+[2026-01-14 19:45:56.761] [INFO] Camera 1 scan: detections=564, avg_conf=0.61, frames_read=900
+[2026-01-14 19:45:56.762] [INFO] Selected camera 0 with 314 detections, avg_conf=0.62
+[2026-01-14 19:45:56.763] [INFO] Trackers and statistics reset
+[2026-01-14 19:45:56.764] [INFO] Phase 0 complete: selected camera 0, duration=85.5s
+[2026-01-14 19:45:56.764] [INFO] Starting highlight video generation
+[2026-01-14 19:45:56.764] [INFO] Starting camera: 0 (RIGHT_CAM)
+[2026-01-14 19:45:56.903] [ERROR] Error in camera_switcher.update: 'CameraSwitcher' object has no attribute '_last_active_set_frame'
+[2026-01-14 19:45:56.910] [INFO] Video writer initialized: 1920x1080 @ 30.00fps
+[2026-01-14 19:45:56.963] [ERROR] Error in camera_switcher.update: 'CameraSwitcher' object has no attribute '_last_active_set_frame'
+[2026-01-14 19:45:57.020] [ERROR] Error in camera_switcher.update: 'CameraSwitcher' object has no attribute '_last_active_set_frame'
+[2026-01-14 19:45:57.078] [ERROR] Error in camera_switcher.update: 'CameraSwitcher' object has no attribute '_last_active_set_frame'
+[2026-01-14 19:45:57.130] [ERROR] Error in camera_switcher.update: 'CameraSwitcher' object has no attribute '_last_active_set_frame'
+[2026-01-14 19:46:01.791] [INFO] Progress: 91.2s/500s, 68 frames, 68 written, 0 switches
+[2026-01-14 19:46:06.841] [INFO] Progress: 96.3s/500s, 148 frames, 148 written, 0 switches
+[2026-01-14 19:46:11.880] [INFO] Progress: 101.4s/500s, 238 frames, 238 written, 0 switches
+[2026-01-14 19:46:16.922] [INFO] Progress: 106.4s/500s, 302 frames, 302 written, 0 switches
+[2026-01-14 19:46:21.954] [INFO] Progress: 111.5s/500s, 386 frames, 386 written, 0 switches
+[2026-01-14 19:46:27.027] [INFO] Progress: 116.5s/500s, 472 frames, 472 written, 0 switches
+[2026-01-14 19:46:32.041] [INFO] Progress: 121.5s/500s, 539 frames, 539 written, 0 switches
+[2026-01-14 19:46:37.048] [INFO] Progress: 126.5s/500s, 628 frames, 628 written, 0 switches
+[2026-01-14 19:46:42.063] [INFO] Progress: 131.5s/500s, 704 frames, 704 written, 0 switches
+[2026-01-14 19:46:47.099] [INFO] Progress: 136.6s/500s, 779 frames, 779 written, 0 switches
+[2026-01-14 19:46:52.125] [INFO] Progress: 141.6s/500s, 867 frames, 867 written, 0 switches
+[2026-01-14 19:46:57.179] [INFO] Progress: 146.7s/500s, 937 frames, 937 written, 0 switches
+[2026-01-14 19:47:02.194] [INFO] Progress: 151.7s/500s, 1017 frames, 1017 written, 0 switches
+[2026-01-14 19:47:07.240] [INFO] Progress: 156.7s/500s, 1106 frames, 1106 written, 0 switches
+[2026-01-14 19:47:12.316] [INFO] Progress: 161.8s/500s, 1172 frames, 1172 written, 0 switches
+[2026-01-14 19:47:17.368] [INFO] Progress: 166.9s/500s, 1261 frames, 1261 written, 0 switches
+[2026-01-14 19:47:22.408] [INFO] Progress: 171.9s/500s, 1349 frames, 1349 written, 0 switches
+[2026-01-14 19:47:27.424] [INFO] Progress: 176.9s/500s, 1413 frames, 1413 written, 0 switches
+[2026-01-14 19:47:32.447] [INFO] Progress: 181.9s/500s, 1498 frames, 1498 written, 0 switches
+[2026-01-14 19:47:37.530] [INFO] Progress: 187.0s/500s, 1580 frames, 1580 written, 0 switches
+[2026-01-14 19:47:42.564] [INFO] Progress: 192.1s/500s, 1648 frames, 1648 written, 0 switches
+[2026-01-14 19:47:47.616] [INFO] Progress: 197.1s/500s, 1734 frames, 1734 written, 0 switches
+[2026-01-14 19:47:52.724] [INFO] Progress: 202.2s/500s, 1807 frames, 1807 written, 0 switches
+[2026-01-14 19:47:57.745] [INFO] Progress: 207.2s/500s, 1881 frames, 1881 written, 0 switches
+[2026-01-14 19:48:02.774] [INFO] Progress: 212.3s/500s, 1969 frames, 1969 written, 0 switches
+[2026-01-14 19:48:07.840] [INFO] Progress: 217.1s/500s, 2033 frames, 2033 written, 0 switches
+[2026-01-14 19:48:12.850] [INFO] Progress: 222.3s/500s, 2108 frames, 2108 written, 0 switches
+[2026-01-14 19:48:17.892] [INFO] Progress: 227.4s/500s, 2194 frames, 2194 written, 0 switches
+[2026-01-14 19:48:22.921] [INFO] Progress: 232.4s/500s, 2256 frames, 2256 written, 0 switches
+[2026-01-14 19:48:27.972] [INFO] Progress: 237.5s/500s, 2346 frames, 2346 written, 0 switches
+[2026-01-14 19:48:33.041] [INFO] Progress: 242.5s/500s, 2432 frames, 2432 written, 0 switches
+[2026-01-14 19:48:38.098] [INFO] Progress: 247.6s/500s, 2497 frames, 2497 written, 0 switches
+[2026-01-14 19:48:43.149] [INFO] Progress: 252.6s/500s, 2583 frames, 2583 written, 0 switches
+[2026-01-14 19:48:48.204] [INFO] Progress: 257.6s/500s, 2660 frames, 2660 written, 0 switches
+[2026-01-14 19:48:53.228] [INFO] Progress: 262.7s/500s, 2735 frames, 2735 written, 0 switches
+[2026-01-14 19:48:58.272] [INFO] Progress: 267.8s/500s, 2823 frames, 2823 written, 0 switches
+[2026-01-14 19:49:03.338] [INFO] Progress: 272.8s/500s, 2893 frames, 2893 written, 0 switches
+[2026-01-14 19:49:08.350] [INFO] Progress: 277.8s/500s, 2976 frames, 2976 written, 0 switches
+[2026-01-14 19:49:13.390] [INFO] Progress: 282.9s/500s, 3064 frames, 3064 written, 0 switches
+[2026-01-14 19:49:18.412] [INFO] Progress: 287.9s/500s, 3127 frames, 3127 written, 0 switches
+[2026-01-14 19:49:23.424] [INFO] Progress: 292.9s/500s, 3213 frames, 3213 written, 0 switches
+[2026-01-14 19:49:28.502] [INFO] Progress: 297.9s/500s, 3300 frames, 3300 written, 0 switches
+[2026-01-14 19:49:33.532] [INFO] Progress: 303.0s/500s, 3364 frames, 3364 written, 0 switches
+[2026-01-14 19:49:38.559] [INFO] Progress: 308.1s/500s, 3452 frames, 3452 written, 0 switches
+[2026-01-14 19:49:43.600] [INFO] Progress: 313.1s/500s, 3533 frames, 3533 written, 0 switches
+[2026-01-14 19:49:48.605] [INFO] Progress: 318.1s/500s, 3607 frames, 3607 written, 0 switches
+[2026-01-14 19:49:53.618] [INFO] Progress: 323.1s/500s, 3698 frames, 3698 written, 0 switches
+[2026-01-14 19:49:58.666] [INFO] Progress: 328.1s/500s, 3768 frames, 3768 written, 0 switches
+[2026-01-14 19:50:03.676] [INFO] Progress: 333.2s/500s, 3848 frames, 3848 written, 0 switches
+[2026-01-14 19:50:08.712] [INFO] Progress: 338.2s/500s, 3937 frames, 3937 written, 0 switches
+[2026-01-14 19:50:13.722] [INFO] Progress: 343.2s/500s, 4002 frames, 4002 written, 0 switches
+[2026-01-14 19:50:18.732] [INFO] Progress: 348.2s/500s, 4092 frames, 4092 written, 0 switches
+[2026-01-14 19:50:23.789] [INFO] Progress: 353.3s/500s, 4183 frames, 4183 written, 0 switches
+[2026-01-14 19:50:28.831] [INFO] Progress: 358.3s/500s, 4249 frames, 4249 written, 0 switches
+[2026-01-14 19:50:33.864] [INFO] Progress: 363.4s/500s, 4339 frames, 4339 written, 0 switches
+[2026-01-14 19:50:38.880] [INFO] Progress: 368.3s/500s, 4423 frames, 4423 written, 0 switches
+[2026-01-14 19:50:43.922] [INFO] Progress: 373.4s/500s, 4497 frames, 4497 written, 0 switches
+[2026-01-14 19:50:48.925] [INFO] Progress: 378.4s/500s, 4587 frames, 4587 written, 0 switches
+[2026-01-14 19:50:53.966] [INFO] Progress: 383.5s/500s, 4663 frames, 4663 written, 0 switches
+[2026-01-14 19:50:59.017] [INFO] Progress: 388.5s/500s, 4743 frames, 4743 written, 0 switches
+[2026-01-14 19:51:04.057] [INFO] Progress: 393.6s/500s, 4831 frames, 4831 written, 0 switches
+[2026-01-14 19:51:09.096] [INFO] Progress: 398.6s/500s, 4898 frames, 4898 written, 0 switches
+[2026-01-14 19:51:14.114] [INFO] Progress: 403.6s/500s, 4986 frames, 4986 written, 0 switches
+[2026-01-14 19:51:19.148] [INFO] Progress: 408.6s/500s, 5076 frames, 5076 written, 0 switches
+[2026-01-14 19:51:24.198] [INFO] Progress: 413.7s/500s, 5142 frames, 5142 written, 0 switches
+[2026-01-14 19:51:29.234] [INFO] Progress: 418.7s/500s, 5232 frames, 5232 written, 0 switches
+[2026-01-14 19:51:34.308] [INFO] Progress: 423.8s/500s, 5314 frames, 5314 written, 0 switches
+[2026-01-14 19:51:39.329] [INFO] Progress: 428.8s/500s, 5382 frames, 5382 written, 0 switches
+[2026-01-14 19:51:44.371] [INFO] Progress: 433.9s/500s, 5468 frames, 5468 written, 0 switches
+[2026-01-14 19:51:49.471] [INFO] Progress: 438.9s/500s, 5540 frames, 5540 written, 0 switches
+[2026-01-14 19:51:54.493] [INFO] Progress: 444.0s/500s, 5613 frames, 5613 written, 0 switches
+[2026-01-14 19:51:59.542] [INFO] Progress: 449.0s/500s, 5684 frames, 5684 written, 0 switches
+[2026-01-14 19:52:04.619] [INFO] Progress: 454.1s/500s, 5750 frames, 5750 written, 0 switches
+[2026-01-14 19:52:09.643] [INFO] Progress: 459.1s/500s, 5830 frames, 5830 written, 0 switches
+[2026-01-14 19:52:14.661] [INFO] Progress: 464.2s/500s, 5914 frames, 5914 written, 0 switches
+[2026-01-14 19:52:19.685] [INFO] Progress: 469.2s/500s, 5975 frames, 5975 written, 0 switches
+[2026-01-14 19:52:24.723] [INFO] Progress: 474.2s/500s, 6060 frames, 6060 written, 0 switches
+[2026-01-14 19:52:29.732] [INFO] Progress: 479.2s/500s, 6142 frames, 6142 written, 0 switches
+[2026-01-14 19:52:34.765] [INFO] Progress: 484.3s/500s, 6206 frames, 6206 written, 0 switches
+[2026-01-14 19:52:39.786] [INFO] Progress: 489.3s/500s, 6293 frames, 6293 written, 0 switches
+[2026-01-14 19:52:44.792] [INFO] Progress: 494.3s/500s, 6372 frames, 6372 written, 0 switches
+[2026-01-14 19:52:49.852] [INFO] Progress: 499.3s/500s, 6443 frames, 6443 written, 0 switches
+[2026-01-14 19:52:50.478] [INFO] Reached MAX_DUR limit: 500s
+[2026-01-14 19:52:50.484] [INFO] Highlight generation complete: 6454 frames in 500.0s
+[2026-01-14 19:52:50.484] [INFO] Results: switches=0, errors=9809

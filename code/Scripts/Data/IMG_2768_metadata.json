@@ -1,0 +1,226 @@
+{
+  "summary": {
+    "filename": "IMG_2768.MOV",
+    "file_size": "3.80 GB",
+    "file_path": "D:\\New folder\\football\\final\\input\\IMG_2768.MOV",
+    "duration": "1h 1m 21s",
+    "bitrate": "8.86 Mbps",
+    "resolution": "1920x1080",
+    "resolution_name": "1080p Full HD",
+    "frame_rate": "29.994 fps",
+    "video_codec": "hevc",
+    "audio_codec": "aac",
+    "audio_channels": "2 channels (stereo)",
+    "sample_rate": "44.1 kHz",
+    "device": "Apple iPhone 15",
+    "creation_time": "2026-01-05T20:04:48+0000"
+  },
+  "file": {
+    "name": "IMG_2768.MOV",
+    "path": "D:\\New folder\\football\\final\\input\\IMG_2768.MOV",
+    "size": {
+      "bytes": 4078421305,
+      "kb": 3982833.31,
+      "mb": 3889.49,
+      "gb": 3.798,
+      "human_readable": "3.80 GB"
+    }
+  },
+  "container": {
+    "format": {
+      "name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "full_name": "QuickTime / MOV"
+    },
+    "duration": {
+      "seconds": 3681.293,
+      "formatted": "01:01:21.293",
+      "human_readable": "1h 1m 21s"
+    },
+    "size": {
+      "bytes": 4078421305,
+      "kb": 3982833.31,
+      "mb": 3889.49,
+      "gb": 3.798,
+      "human_readable": "3.80 GB"
+    },
+    "bitrate": {
+      "bps": 8863018,
+      "kbps": 8863.02,
+      "mbps": 8.863,
+      "human_readable": "8.86 Mbps"
+    },
+    "streams": {
+      "total": 7,
+      "programs": 0
+    }
+  },
+  "video_streams": [
+    {
+      "codec": {
+        "name": "hevc",
+        "full_name": "H.265 / HEVC (High Efficiency Video Coding)"
+      },
+      "resolution": {
+        "width": 1920,
+        "height": 1080,
+        "resolution": "1920x1080",
+        "name": "1080p Full HD",
+        "total_pixels": 2073600
+      },
+      "aspect_ratio": {
+        "display": null,
+        "pixel": null
+      },
+      "frame_rate": {
+        "fps": 29.994,
+        "raw": "22083600/736259",
+        "r_frame_rate": "30/1",
+        "human_readable": "29.994 fps"
+      },
+      "bitrate": {
+        "bps": 8582510,
+        "kbps": 8582.51,
+        "mbps": 8.583,
+        "human_readable": "8.58 Mbps"
+      },
+      "duration": {
+        "seconds": 3681.293,
+        "formatted": "01:01:21.293",
+        "human_readable": "1h 1m 21s"
+      },
+      "total_frames": "110418",
+      "color": {
+        "pixel_format": "yuv420p10le",
+        "color_space": "bt2020nc",
+        "color_range": "tv",
+        "color_primaries": "bt2020",
+        "transfer_characteristics": null
+      },
+      "rotation": {
+        "degrees": 0,
+        "human_readable": "No rotation"
+      },
+      "raw_tags": {
+        "creation_time": "2026-01-05T20:04:48.000000Z",
+        "language": "und",
+        "handler_name": "Core Media Video",
+        "vendor_id": "[0][0][0][0]",
+        "encoder": "HEVC"
+      }
+    }
+  ],
+  "audio_streams": [
+    {
+      "codec": {
+        "name": "aac",
+        "full_name": "AAC (Advanced Audio Coding)"
+      },
+      "sample_rate": {
+        "hz": 44100,
+        "human_readable": "44.1 kHz"
+      },
+      "channels": {
+        "count": 2,
+        "layout": "stereo",
+        "human_readable": "2 channels (stereo)"
+      },
+      "bitrate": {
+        "bps": 192193,
+        "kbps": 192.19,
+        "mbps": 0.192,
+        "human_readable": "192.19 Kbps"
+      },
+      "duration": {
+        "seconds": 3681.292,
+        "formatted": "01:01:21.291",
+        "human_readable": "1h 1m 21s"
+      },
+      "bit_depth": null,
+      "raw_tags": {
+        "creation_time": "2026-01-05T20:04:48.000000Z",
+        "language": "und",
+        "handler_name": "Core Media Audio",
+        "vendor_id": "[0][0][0][0]"
+      }
+    }
+  ],
+  "other_streams": [
+    {
+      "codec_type": "data",
+      "codec_name": null,
+      "index": 2,
+      "tags": {
+        "creation_time": "2026-01-05T20:04:48.000000Z",
+        "language": "und",
+        "handler_name": "Core Media Metadata"
+      }
+    },
+    {
+      "codec_type": "data",
+      "codec_name": null,
+      "index": 3,
+      "tags": {
+        "creation_time": "2026-01-05T20:04:48.000000Z",
+        "language": "und",
+        "handler_name": "Core Media Metadata"
+      }
+    },
+    {
+      "codec_type": "data",
+      "codec_name": null,
+      "index": 4,
+      "tags": {
+        "creation_time": "2026-01-05T20:04:48.000000Z",
+        "language": "und",
+        "handler_name": "Core Media Metadata"
+      }
+    },
+    {
+      "codec_type": "data",
+      "codec_name": null,
+      "index": 5,
+      "tags": {
+        "creation_time": "2026-01-05T20:04:48.000000Z",
+        "language": "und",
+        "handler_name": "Core Media Metadata"
+      }
+    },
+    {
+      "codec_type": "data",
+      "codec_name": null,
+      "index": 6,
+      "tags": {
+        "creation_time": "2026-01-05T20:04:48.000000Z",
+        "language": "und",
+        "handler_name": "Core Media Metadata"
+      }
+    }
+  ],
+  "camera": {
+    "device": {
+      "make": "Apple",
+      "model": "iPhone 15"
+    },
+    "software": "18.7.1",
+    "timestamps": {
+      "creation_time": "2026-01-05T20:04:48+0000"
+    },
+    "make": "Apple",
+    "model": "iPhone 15",
+    "creation_time": "2026-01-05T20:04:48+0000"
+  },
+  "raw_tags": {
+    "format": {
+      "major_brand": "qt  ",
+      "minor_version": "0",
+      "compatible_brands": "qt  ",
+      "creation_time": "2026-01-05T20:04:48.000000Z",
+      "com.apple.quicktime.full-frame-rate-playback-intent": "0",
+      "com.apple.quicktime.make": "Apple",
+      "com.apple.quicktime.model": "iPhone 15",
+      "com.apple.quicktime.software": "18.7.1",
+      "com.apple.quicktime.creationdate": "2026-01-05T20:04:48+0000"
+    }
+  },
+  "chapters": []
+}

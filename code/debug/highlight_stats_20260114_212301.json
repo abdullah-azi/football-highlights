@@ -1,0 +1,89 @@
+{
+  "config": {
+    "skip_seconds": 0,
+    "max_duration_seconds": 300,
+    "output_path": "/content/drive/MyDrive/football/final/output/Highlight_20260114_212301.mp4",
+    "timestamp": "20260114_212301"
+  },
+  "processing": {
+    "written_frames": 240,
+    "switches": 1,
+    "errors": 0,
+    "start_time": "2026-01-14T21:23:01.768339",
+    "end_time": "2026-01-14T21:24:41.191477",
+    "processing_time_sec": 99.33792328834534,
+    "output_fps": 29.997536208929482,
+    "camera_usage": {
+      "0": 110,
+      "1": 132
+    },
+    "switch_events": [
+      {
+        "frame": 110,
+        "time_sec": 90.94975471496582,
+        "from_cam": 0,
+        "to_cam": 1,
+        "zone": "LEFT_BOTTOM",
+        "exit_prob": 0.75,
+        "reason": "exit_confirmed"
+      }
+    ]
+  },
+  "errors": [],
+  "detection_stats": {
+    "total_frames": 241,
+    "detections_found": 181,
+    "detections_lost": 60,
+    "detections_filtered": 0,
+    "total_inference_time_ms": 6575.08397102356,
+    "min_inference_ms": 20.334720611572266,
+    "max_inference_ms": 46.14710807800293,
+    "last_reset_time": 1768425865.2069252,
+    "avg_inference_ms": 27.282506103832198,
+    "detection_rate": 0.7510373443983402
+  },
+  "sticky_stats": {
+    "total_updates": 241,
+    "accepted": 174,
+    "hold_last": 31,
+    "jump_rejected": 0,
+    "low_conf_hold": 1,
+    "low_conf_lost": 0,
+    "fully_lost": 35,
+    "total_jump_distance": 2808.1203048456173,
+    "max_jump_distance": 190.29024360828382,
+    "total_iou": 87.74937753472659,
+    "iou_count": 165,
+    "last_reset_time": 1768425865.2070541,
+    "acceptance_rate": 0.7219917012448133,
+    "hold_rate": 0.12863070539419086,
+    "avg_iou": 0.5318144093013732,
+    "avg_jump_distance": 16.138622441641477
+  },
+  "switcher_stats": {
+    "total_updates": 241,
+    "switches": 1,
+    "stays": 240,
+    "state_found": 174,
+    "state_held": 32,
+    "state_lost": 35,
+    "zone_changes": 2,
+    "cooldown_blocks": 14,
+    "miss_threshold_blocks": 0,
+    "no_exit_zone_blocks": 0,
+    "trajectory_blocks": 0,
+    "prob_threshold_blocks": 0,
+    "zones_visited": {
+      "LEFT_BOTTOM": 155
+    },
+    "switches_by_zone": {
+      "LEFT_BOTTOM": 1
+    },
+    "switches_by_camera": {
+      "0->1": 1
+    },
+    "last_reset_time": 1768425865.2071416,
+    "switch_rate": 0.004149377593360996,
+    "stay_rate": 0.995850622406639
+  }
+}
