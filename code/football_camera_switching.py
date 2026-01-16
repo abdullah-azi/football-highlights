@@ -4647,7 +4647,14 @@ print(f"   Show inference time: {'✅' if DEBUG_TIME else '❌'}")
 print("\n💡 Tips:")
 print("   - Tune MIN_BOX_AREA_FRAC/MAX_BOX_AREA_FRAC if ball is missed or false positives occur")
 print("   - Adjust BALL_CONF_THRESH for sensitivity (lower = more detections, higher = fewer false positives)")
-print("   - Check debug logs in:", DEBUG_DIR)
+# Check if DEBUG_DIR is available before printing
+try:
+    if 'DEBUG_DIR' in globals():
+        print(f"   - Check debug logs in: {DEBUG_DIR}")
+    else:
+        print("   - Check debug logs in: debug/ directory")
+except NameError:
+    print("   - Check debug logs in: debug/ directory")
 print("   - Use get_detection_stats() to view performance metrics")
 
 if ENABLE_FILE_LOGGING:
@@ -6305,9 +6312,11 @@ SWITCHER_FPS = 30  # Default FPS, will be updated from video metadata
 BALL_MISS_SEC_TO_SWITCH = 0.10        # switch after this many seconds of consecutive misses (3 frames @ 30fps, more stable)
 SWITCH_COOLDOWN_SEC = 0.60            # Cooldown period (seconds) after switching (increased to prevent rapid switching)
 MIN_HOLD_SEC = 0.0                    # Minimum hold after switch (seconds, 0 = disabled)
-ZONE_ARM_SEC = 0.20                   # consecutive seconds in zone to arm (6 frames @ 30fps, more stable arming)
-ZONE_STABLE_SEC = 0.15                # require N seconds before zone changes (4-5 frames @ 30fps, more stable)
-ZONE_DISARM_GRACE_SEC = 0.10          # grace period before clearing a zone (3 frames @ 30fps)
+# Zone entry detection requirements - reverted to working values
+# Ball must be detected in zone for this many seconds before zone is considered "armed"
+ZONE_ARM_SEC = 0.20                   # consecutive seconds in zone to arm (6 frames @ 30fps, previous working value)
+ZONE_STABLE_SEC = 0.15                # require N seconds before zone changes (4-5 frames @ 30fps, previous working value)
+ZONE_DISARM_GRACE_SEC = 0.10          # grace period before clearing a zone (3 frames @ 30fps, previous working value)
 
 # Convert to frames (will be recalculated if FPS changes)
 def _switcher_sec_to_frames(seconds: float, fps: float = None) -> int:
@@ -6354,6 +6363,15 @@ MIN_SPEED_FOR_EXIT = 0.005             # Increased from 0.002 to reduce false sw
 # If not set, will fall back to name-based inference for backward compatibility
 CAMERA_ROLES: Optional[Dict[int, str]] = None  # Set this explicitly if you know camera roles
 
+# ==============================
+# MIDDLE CAMERA OPPOSITE SIDE CONFIGURATION
+# ==============================
+# Enable this when middle camera is placed on the OPPOSITE side of the field
+# When enabled, switching logic is inverted:
+#   - Ball goes RIGHT in frame → switch to LEFT camera (inverted)
+#   - Ball goes LEFT in frame → switch to RIGHT camera (inverted)
+ENABLE_MIDDLE_OPP = False  # Set to True when middle camera is on opposite side
+
 def get_camera_roles() -> Dict[int, str]:
     """
     Get camera roles, using explicit CAMERA_ROLES if available, otherwise infer from names.
@@ -6385,6 +6403,37 @@ def get_camera_roles() -> Dict[int, str]:
             roles[cam_id] = "MIDDLE"
     
     return roles
+
+def update_middle_camera_name_for_opp():
+    """Update middle camera name to show 'Middle OP' if ENABLE_MIDDLE_OPP is enabled.
+    This should be called after get_camera_roles() is defined and before building exit zones."""
+    if 'ENABLE_MIDDLE_OPP' in globals() and ENABLE_MIDDLE_OPP:
+        # Update CAMERA_NAMES if it exists
+        if 'CAMERA_NAMES' in globals() and isinstance(CAMERA_NAMES, dict):
+            camera_roles = get_camera_roles()
+            for cam_id, role in camera_roles.items():
+                if role == "MIDDLE" and cam_id in CAMERA_NAMES:
+                    current_name = CAMERA_NAMES[cam_id].upper()
+                    if "MIDDLE" in current_name and "OP" not in current_name:
+                        if "_CAM" in current_name:
+                            CAMERA_NAMES[cam_id] = "MIDDLE_OP_CAM"
+                        elif "_CAMERA" in current_name:
+                            CAMERA_NAMES[cam_id] = "MIDDLE_OP_CAMERA"
+                        else:
+                            CAMERA_NAMES[cam_id] = "Middle OP"
+        # Update SYNCED_CAMERA_NAMES if it exists
+        if 'SYNCED_CAMERA_NAMES' in globals() and isinstance(SYNCED_CAMERA_NAMES, dict):
+            camera_roles = get_camera_roles()
+            for cam_id, role in camera_roles.items():
+                if role == "MIDDLE" and cam_id in SYNCED_CAMERA_NAMES:
+                    current_name = SYNCED_CAMERA_NAMES[cam_id].upper()
+                    if "MIDDLE" in current_name and "OP" not in current_name:
+                        if "_CAM" in current_name:
+                            SYNCED_CAMERA_NAMES[cam_id] = "MIDDLE_OP_CAM"
+                        elif "_CAMERA" in current_name:
+                            SYNCED_CAMERA_NAMES[cam_id] = "MIDDLE_OP_CAMERA"
+                        else:
+                            SYNCED_CAMERA_NAMES[cam_id] = "Middle OP"
 
 def update_switcher_fps(fps: float):
     """
@@ -6520,19 +6569,25 @@ def build_exit_zones_dynamic() -> Tuple[Dict[int, Dict[str, Tuple[float, float, 
     # Zone thresholds can be adjusted based on actual camera positions
     # Test and calibrate based on actual camera setup
     if middle_cam_id is not None:
+        # Check if middle camera is on opposite side (inverted switching)
+        # Get the flag from global scope if available
+        enable_middle_opp = False
+        if 'ENABLE_MIDDLE_OPP' in globals():
+            enable_middle_opp = ENABLE_MIDDLE_OPP
+        
         # Configurable zone thresholds for middle camera
         # Adjust these values based on actual camera field of view and position
-        # NOTE: middle camera is on the opposite sideline, so we use slightly
-        # narrower left/right edge bands and slightly taller top/bottom bands
-        # to avoid over-triggering switches when the ball is still comfortably
-        # inside the middle camera's field of view.
-        MIDDLE_CAM_LEFT_THRESHOLD = 0.04      # Slimmer: was 0.06      # Left edge threshold (adjust if needed)
-        MIDDLE_CAM_RIGHT_THRESHOLD = 0.96    # Slimmer: was 0.94    # Right edge threshold (adjust if needed)
-        MIDDLE_CAM_TOP_THRESHOLD = 0.05       # Slimmer: was 0.10       # Top edge threshold (adjust if needed)
-        MIDDLE_CAM_BOTTOM_THRESHOLD = 0.95    # Slimmer: was 0.90    # Bottom edge threshold (adjust if needed)
-        MIDDLE_CAM_CORNER_TOP = 0.25         # Slimmer: was 0.28         # Top corner boundary (adjust if needed)
-        MIDDLE_CAM_CORNER_BOTTOM = 0.75      # Slimmer: was 0.72      # Bottom corner boundary (adjust if needed)
+        MIDDLE_CAM_LEFT_THRESHOLD = 0.04      # Left edge threshold
+        MIDDLE_CAM_RIGHT_THRESHOLD = 0.96     # Right edge threshold
+        MIDDLE_CAM_TOP_THRESHOLD = 0.05       # Top edge threshold
+        MIDDLE_CAM_BOTTOM_THRESHOLD = 0.95    # Bottom edge threshold
+        MIDDLE_CAM_CORNER_TOP = 0.25          # Top corner boundary
+        MIDDLE_CAM_CORNER_BOTTOM = 0.75       # Bottom corner boundary
+        MIDDLE_CAM_CENTER_LEFT = 0.45         # Center-left boundary (for EQUAL zone)
+        MIDDLE_CAM_CENTER_RIGHT = 0.55        # Center-right boundary (for EQUAL zone)
 
+        # Well-defined zones for middle camera (same side or opposite side)
+        # Both configurations use the same zone definitions, only switching logic differs
         exit_zones[middle_cam_id] = {
             "LEFT":        (0.00, 0.00, MIDDLE_CAM_LEFT_THRESHOLD, 1.00),      # Left edge
             "LEFT_TOP":    (0.00, 0.00, MIDDLE_CAM_LEFT_THRESHOLD + 0.02, MIDDLE_CAM_CORNER_TOP),      # Left-top corner
@@ -6542,50 +6597,138 @@ def build_exit_zones_dynamic() -> Tuple[Dict[int, Dict[str, Tuple[float, float, 
             "RIGHT_BOTTOM":(MIDDLE_CAM_RIGHT_THRESHOLD - 0.02, MIDDLE_CAM_CORNER_BOTTOM, 1.00, 1.00),      # Right-bottom corner
             "BOTTOM":      (0.00, MIDDLE_CAM_BOTTOM_THRESHOLD, 1.00, 1.00),      # Bottom edge
             "TOP":         (0.00, 0.00, 1.00, MIDDLE_CAM_TOP_THRESHOLD),      # Top edge
+            "EQUAL":       (MIDDLE_CAM_CENTER_LEFT, 0.40, MIDDLE_CAM_CENTER_RIGHT, 0.60),      # Center zone (equal/balanced)
         }
 
         next_camera_by_zone[middle_cam_id] = {}
-        if left_cam_id is not None:
-            next_camera_by_zone[middle_cam_id]["LEFT"] = left_cam_id
-            next_camera_by_zone[middle_cam_id]["LEFT_TOP"] = left_cam_id
-            next_camera_by_zone[middle_cam_id]["LEFT_BOTTOM"] = left_cam_id
-        if right_cam_id is not None:
-            next_camera_by_zone[middle_cam_id]["RIGHT"] = right_cam_id
-            next_camera_by_zone[middle_cam_id]["RIGHT_TOP"] = right_cam_id
-            next_camera_by_zone[middle_cam_id]["RIGHT_BOTTOM"] = right_cam_id
-        # TOP and BOTTOM use position-based logic (handled in select_next_camera function)
-        # Default to right camera if available, otherwise left
-        if right_cam_id is not None:
-            next_camera_by_zone[middle_cam_id]["BOTTOM"] = right_cam_id
-            next_camera_by_zone[middle_cam_id]["TOP"] = right_cam_id
-        elif left_cam_id is not None:
-            next_camera_by_zone[middle_cam_id]["BOTTOM"] = left_cam_id
-            next_camera_by_zone[middle_cam_id]["TOP"] = left_cam_id
+        
+        if enable_middle_opp:
+            # MIDDLE-OP MODE: Middle camera on OPPOSITE side - INVERTED switching
+            # When ball goes RIGHT in frame → switch to LEFT camera (inverted)
+            # When ball goes LEFT in frame → switch to RIGHT camera (inverted)
+            if left_cam_id is not None:
+                # RIGHT zones → LEFT camera (inverted)
+                next_camera_by_zone[middle_cam_id]["RIGHT"] = left_cam_id
+                next_camera_by_zone[middle_cam_id]["RIGHT_TOP"] = left_cam_id
+                next_camera_by_zone[middle_cam_id]["RIGHT_BOTTOM"] = left_cam_id
+            if right_cam_id is not None:
+                # LEFT zones → RIGHT camera (inverted)
+                next_camera_by_zone[middle_cam_id]["LEFT"] = right_cam_id
+                next_camera_by_zone[middle_cam_id]["LEFT_TOP"] = right_cam_id
+                next_camera_by_zone[middle_cam_id]["LEFT_BOTTOM"] = right_cam_id
+            # TOP and BOTTOM: Default to left camera if available (inverted preference)
+            if left_cam_id is not None:
+                next_camera_by_zone[middle_cam_id]["BOTTOM"] = left_cam_id
+                next_camera_by_zone[middle_cam_id]["TOP"] = left_cam_id
+            elif right_cam_id is not None:
+                next_camera_by_zone[middle_cam_id]["BOTTOM"] = right_cam_id
+                next_camera_by_zone[middle_cam_id]["TOP"] = right_cam_id
+            # EQUAL zone: Use position-based logic (prefer left in inverted mode)
+            if left_cam_id is not None:
+                next_camera_by_zone[middle_cam_id]["EQUAL"] = left_cam_id
+            elif right_cam_id is not None:
+                next_camera_by_zone[middle_cam_id]["EQUAL"] = right_cam_id
+        else:
+            # NORMAL MODE: Middle camera on SAME side - Standard switching
+            # When ball goes LEFT in frame → switch to LEFT camera
+            # When ball goes RIGHT in frame → switch to RIGHT camera
+            if left_cam_id is not None:
+                next_camera_by_zone[middle_cam_id]["LEFT"] = left_cam_id
+                next_camera_by_zone[middle_cam_id]["LEFT_TOP"] = left_cam_id
+                next_camera_by_zone[middle_cam_id]["LEFT_BOTTOM"] = left_cam_id
+            if right_cam_id is not None:
+                next_camera_by_zone[middle_cam_id]["RIGHT"] = right_cam_id
+                next_camera_by_zone[middle_cam_id]["RIGHT_TOP"] = right_cam_id
+                next_camera_by_zone[middle_cam_id]["RIGHT_BOTTOM"] = right_cam_id
+            # TOP and BOTTOM: Default to right camera if available, otherwise left
+            if right_cam_id is not None:
+                next_camera_by_zone[middle_cam_id]["BOTTOM"] = right_cam_id
+                next_camera_by_zone[middle_cam_id]["TOP"] = right_cam_id
+            elif left_cam_id is not None:
+                next_camera_by_zone[middle_cam_id]["BOTTOM"] = left_cam_id
+                next_camera_by_zone[middle_cam_id]["TOP"] = left_cam_id
+            # EQUAL zone: Use position-based logic (prefer right in normal mode)
+            if right_cam_id is not None:
+                next_camera_by_zone[middle_cam_id]["EQUAL"] = right_cam_id
+            elif left_cam_id is not None:
+                next_camera_by_zone[middle_cam_id]["EQUAL"] = left_cam_id
 
     return exit_zones, next_camera_by_zone
+
+# Update middle camera name early if ENABLE_MIDDLE_OPP is enabled
+# This must happen before building exit zones so the name is correct in all displays
+update_middle_camera_name_for_opp()
 
 # Build exit zones dynamically
 EXIT_ZONES, NEXT_CAMERA_BY_ZONE = build_exit_zones_dynamic()
 
 # Print configuration summary
 print("\n📊 Dynamic Exit Zones Configuration:")
-# Get camera names for display
+# Get camera names for display (after update_middle_camera_name_for_opp has run)
 _display_camera_names = {}
 if 'CAMERA_NAMES' in globals() and isinstance(CAMERA_NAMES, dict):
-    _display_camera_names = CAMERA_NAMES
+    _display_camera_names = CAMERA_NAMES.copy()  # Use copy to ensure we get updated values
 elif 'SYNCED_CAMERA_NAMES' in globals() and isinstance(SYNCED_CAMERA_NAMES, dict):
-    _display_camera_names = SYNCED_CAMERA_NAMES
+    _display_camera_names = SYNCED_CAMERA_NAMES.copy()  # Use copy to ensure we get updated values
+
+# Update display names again in case the update function modified the originals
+update_middle_camera_name_for_opp()
+if 'CAMERA_NAMES' in globals() and isinstance(CAMERA_NAMES, dict):
+    _display_camera_names.update(CAMERA_NAMES)
+if 'SYNCED_CAMERA_NAMES' in globals() and isinstance(SYNCED_CAMERA_NAMES, dict):
+    _display_camera_names.update(SYNCED_CAMERA_NAMES)
 
 if EXIT_ZONES:
     print(f"   Configured for {len(EXIT_ZONES)} camera(s)")
+    # Check if middle camera opposite mode is enabled
+    enable_middle_opp = False
+    if 'ENABLE_MIDDLE_OPP' in globals():
+        enable_middle_opp = ENABLE_MIDDLE_OPP
+    
     for cam_id, zones in EXIT_ZONES.items():
         cam_name = _display_camera_names.get(cam_id, f"Camera {cam_id}")
+        # Check if this is a middle camera
+        is_middle = False
+        camera_roles = get_camera_roles()
+        if cam_id in camera_roles and camera_roles[cam_id] == "MIDDLE":
+            is_middle = True
+        
+        # Update camera name to show "Middle OP" when opposite mode is enabled
+        if is_middle and enable_middle_opp:
+            # Replace "MIDDLE" with "Middle OP" in the name, handling various formats
+            cam_name_upper = cam_name.upper()
+            if "MIDDLE" in cam_name_upper:
+                # Handle formats like: MIDDLE_CAM, MIDDLE_CAMERA, Middle CAM, etc.
+                if "_CAM" in cam_name_upper:
+                    cam_name = "MIDDLE_OP_CAM"
+                elif "_CAMERA" in cam_name_upper:
+                    cam_name = "MIDDLE_OP_CAMERA"
+                else:
+                    cam_name = "Middle OP"
+            else:
+                cam_name = "Middle OP"
+            
+            # Also update the actual dictionary so it's consistent everywhere
+            if 'CAMERA_NAMES' in globals() and isinstance(CAMERA_NAMES, dict) and cam_id in CAMERA_NAMES:
+                CAMERA_NAMES[cam_id] = cam_name
+            if 'SYNCED_CAMERA_NAMES' in globals() and isinstance(SYNCED_CAMERA_NAMES, dict) and cam_id in SYNCED_CAMERA_NAMES:
+                SYNCED_CAMERA_NAMES[cam_id] = cam_name
+            # Update display dictionary too
+            _display_camera_names[cam_id] = cam_name
+        
         print(f"   Camera {cam_id} ({cam_name}): {len(zones)} exit zones")
         if cam_id in NEXT_CAMERA_BY_ZONE:
             print(f"      Next cameras: {NEXT_CAMERA_BY_ZONE[cam_id]}")
 else:
     print("   ⚠️  No cameras detected - using fallback configuration")
     print("   Make sure CAMERA_NAMES or SYNCED_CAMERA_NAMES is defined in Cell 9 or Cell 2")
+
+# Display middle camera configuration status
+if 'ENABLE_MIDDLE_OPP' in globals():
+    if ENABLE_MIDDLE_OPP:
+        print(f"\n   ⚙️  Middle Camera Mode: OPPOSITE SIDE (inverted switching enabled)")
+    else:
+        print(f"\n   ⚙️  Middle Camera Mode: SAME SIDE (standard switching)")
 
 # Optional improvements (safe toggles)
 USE_TRAJECTORY = True                   # require ball velocity to point toward exit zone (ENABLED for better accuracy)
@@ -7058,21 +7201,27 @@ class CameraSwitcher:
         return self._stable_zone
 
     def _update_zone_arming(self, zone: str, state: str, conf: float, frame_idx: int) -> bool:
-        """Track arming state for stable zones to avoid jitter-triggered switches."""
+        """Track arming state for stable zones to avoid jitter-triggered switches.
+        Increased detection requirements: ball must be detected in zone for ZONE_ARM_FRAMES
+        consecutive frames before zone is considered 'armed' for switching."""
         if zone != "NONE" and state in ("FOUND", "HELD") and (state == "HELD" or conf >= MIN_CONF_FOR_FOUND):
+            # Ball is detected in zone - increment arm count
             if self._armed_zone == zone:
                 self._zone_arm_count += 1
             else:
+                # Zone changed - reset count and start arming new zone
                 self._armed_zone = zone
                 self._zone_arm_count = 1
                 self._zone_armed_frame = frame_idx
             self._zone_last_seen_frame = frame_idx
         else:
+            # Ball not detected or low confidence - check if we should disarm
             if self._armed_zone != "NONE" and (frame_idx - self._zone_last_seen_frame) > ZONE_DISARM_GRACE_FRAMES:
                 self._armed_zone = "NONE"
                 self._zone_arm_count = 0
                 self._zone_armed_frame = -10**9
 
+        # Zone is armed only if ball has been detected in zone for ZONE_ARM_FRAMES consecutive frames
         return (self._armed_zone != "NONE" and self._zone_arm_count >= ZONE_ARM_FRAMES)
 
     def compute_exit_probability(self, zone: str, vx: float, vy: float) -> float:
@@ -7096,6 +7245,8 @@ class CameraSwitcher:
         """
         mapping = NEXT_CAMERA_BY_ZONE.get(cam_id, {})
         if zone not in mapping:
+            if ENABLE_SWITCHER_LOGGING and is_middle_cam:
+                _switcher_log(f"Zone {zone} not in mapping for camera {cam_id} (Middle-Op={is_middle_opp})", "WARNING")
             return cam_id
 
         # Get default camera from mapping
@@ -7110,6 +7261,14 @@ class CameraSwitcher:
 
         current_cam_name = camera_names.get(cam_id, "").upper()
         is_middle_cam = 'MIDDLE' in current_cam_name or 'CENTER' in current_cam_name
+        # Check if middle camera is in opposite mode
+        is_middle_opp = False
+        if is_middle_cam and 'ENABLE_MIDDLE_OPP' in globals():
+            is_middle_opp = ENABLE_MIDDLE_OPP
+        
+        # Debug logging for Middle-Op mode (after is_middle_opp is defined)
+        if is_middle_cam and is_middle_opp and ENABLE_SWITCHER_LOGGING:
+            _switcher_log(f"Middle-Op mapping: zone={zone} -> camera={default_cam} (cam_id={cam_id})", "DEBUG")
 
         # Find left, right, and middle camera IDs
         left_cam_id = None
@@ -7156,7 +7315,16 @@ class CameraSwitcher:
                     _switcher_log(f"3-camera routing: Left->Middle (zone=LEFT)", "INFO")
                 return middle_cam_id
 
-        # Priority-based switching for middle camera TOP/BOTTOM exits
+        # CRITICAL FIX: For Middle-Op mode, use mapping directly (already inverted in build_exit_zones_dynamic)
+        # Don't override with velocity/position logic - the mapping already handles the inversion
+        if is_middle_cam and is_middle_opp:
+            # In Middle-Op mode, use the mapping directly (it's already inverted)
+            # LEFT zones → RIGHT camera, RIGHT zones → LEFT camera (handled in mapping)
+            if ENABLE_SWITCHER_LOGGING:
+                _switcher_log(f"Middle-Op mode: Using inverted mapping (zone={zone} -> cam={default_cam})", "INFO")
+            return default_cam
+
+        # Priority-based switching for middle camera TOP/BOTTOM exits (normal mode only)
         # TOP zone: Uses velocity direction (if ball moving right → Left camera, if moving left → Right camera)
         # BOTTOM zone: Uses ball X position to determine next camera
         if is_middle_cam and zone in ("TOP", "BOTTOM"):
@@ -7814,7 +7982,14 @@ print("   - Update EXIT_ZONES and NEXT_CAMERA_BY_ZONE per camera for best result
 print("   - Tune BALL_MISS_FRAMES_TO_SWITCH to adjust sensitivity")
 print("   - Adjust EXIT_PROB_THRESHOLD to control switching confidence")
 print("   - Use print_switcher_stats() to view performance metrics")
-print("   - Check debug logs in:", DEBUG_DIR)
+# Check if DEBUG_DIR is available before printing
+try:
+    if 'DEBUG_DIR' in globals():
+        print(f"   - Check debug logs in: {DEBUG_DIR}")
+    else:
+        print("   - Check debug logs in: debug/ directory")
+except NameError:
+    print("   - Check debug logs in: debug/ directory")
 
 print("\n📊 Available Functions:")
 print("   - get_switcher_stats() → Get current statistics")
@@ -7881,7 +8056,30 @@ if 'SYNCED_CAMERA_MAP' in globals() and SYNCED_CAMERA_MAP:
         if len(available_ids) >= 2:
             CAMERA_NAMES[available_ids[1]] = "LEFT_CAM"
         if len(available_ids) >= 3:
-            CAMERA_NAMES[available_ids[2]] = "MIDDLE_CAM"
+            # Check if middle camera opposite mode is enabled
+            enable_middle_opp = False
+            if 'ENABLE_MIDDLE_OPP' in globals():
+                enable_middle_opp = ENABLE_MIDDLE_OPP
+            if enable_middle_opp:
+                CAMERA_NAMES[available_ids[2]] = "MIDDLE_OP_CAM"
+            else:
+                CAMERA_NAMES[available_ids[2]] = "MIDDLE_CAM"
+    
+    # Update middle camera name in CAMERA_NAMES if ENABLE_MIDDLE_OPP is enabled
+    # This ensures consistency throughout the codebase
+    if 'ENABLE_MIDDLE_OPP' in globals() and ENABLE_MIDDLE_OPP:
+        camera_roles = get_camera_roles()
+        for cam_id, role in camera_roles.items():
+            if role == "MIDDLE" and cam_id in CAMERA_NAMES:
+                # Update the name to show "Middle OP"
+                current_name = CAMERA_NAMES[cam_id].upper()
+                if "MIDDLE" in current_name and "OP" not in current_name:
+                    if "_CAM" in current_name:
+                        CAMERA_NAMES[cam_id] = "MIDDLE_OP_CAM"
+                    elif "_CAMERA" in current_name:
+                        CAMERA_NAMES[cam_id] = "MIDDLE_OP_CAMERA"
+                    else:
+                        CAMERA_NAMES[cam_id] = "Middle OP"
 
     print(f"✅ Using synchronized camera mapping: {len(CAMERA_MAP)} camera(s)")
     for cam_id, name in sorted(CAMERA_NAMES.items()):
@@ -7905,7 +8103,14 @@ else:
 
         if num_videos >= 3:
             CAMERA_MAP[2] = Path(INPUT_VIDEOS[2])
-            CAMERA_NAMES[2] = "MIDDLE_CAM"
+            # Check if middle camera opposite mode is enabled
+            enable_middle_opp = False
+            if 'ENABLE_MIDDLE_OPP' in globals():
+                enable_middle_opp = ENABLE_MIDDLE_OPP
+            if enable_middle_opp:
+                CAMERA_NAMES[2] = "MIDDLE_OP_CAM"
+            else:
+                CAMERA_NAMES[2] = "MIDDLE_CAM"
 
         print(f"✅  Using manual camera configuration: {len(CAMERA_MAP)} camera(s)")
         for cam_id, name in sorted(CAMERA_NAMES.items()):
@@ -7919,6 +8124,9 @@ else:
 # Verify camera mapping is valid
 if not CAMERA_MAP:
     raise ValueError("CAMERA_MAP is empty. Cannot proceed with camera switching.")
+
+# Update middle camera name again after all camera setup is complete
+update_middle_camera_name_for_opp()
 
 # Print final configuration
 print(f"\n📹 Final Camera Configuration:")
@@ -9842,8 +10050,9 @@ PHASE0_SCAN_FRAMES = 300          # frames to scan per camera (~10 seconds at 30
 PHASE0_MIN_DETECTIONS = 3        # minimum detections to accept camera
 PHASE0_CONF_THRESHOLD = 0.12     # confidence to count as detection
 
-# PERFORMANCE OPTIMIZATION: Disable fallback scanning for highlight generation (saves significant time)
-ENABLE_FALLBACK_FOR_HIGHLIGHT = False  # Set to True to enable fallback scanning (slower but more robust)
+# PERFORMANCE OPTIMIZATION: Fallback scanning removed for highlight generation
+# Fallback scanning is expensive (detects ball on all cameras) and less critical for highlights
+# Main switching logic handles normal camera transitions efficiently
 
 # PERFORMANCE OPTIMIZATION: Faster detection for highlight generation (trade-off: slightly less accurate)
 # Reduce image size for faster YOLO inference (640 instead of 1280)
@@ -10259,20 +10468,43 @@ initial_cam = active_cam  # Set by Phase 0
 _highlight_stats["processing"]["camera_usage"][initial_cam] = 0
 
 # ------------------------------
-# MAIN OUTPUT LOOP
+# CALCULATE TARGET FRAMES FOR EXACT DURATION
 # ------------------------------
+# Use the output FPS to calculate exact number of frames needed for MAX_DUR seconds
+# This ensures the output video is exactly MAX_DUR seconds regardless of processing time
+output_fps = fps_map_out.get(initial_cam, OUTPUT_FPS_FALLBACK)
+target_frames = int(MAX_DUR * output_fps)  # Exact number of frames for desired duration
+
+# Check video duration to warn if it's shorter than target
+initial_cam_props = video_properties_out.get(initial_cam, {})
+initial_cam_duration = initial_cam_props.get('duration_sec', 0)
+initial_cam_total_frames = initial_cam_props.get('total_frames', 0)
+
 print(f"\n🎬 Writing highlight video...")
+print(f"   Target duration: {MAX_DUR} seconds")
+print(f"   Output FPS: {output_fps:.2f}")
+print(f"   Target frames: {target_frames}")
+if initial_cam_duration > 0:
+    print(f"   Source video duration: {initial_cam_duration:.1f} seconds ({initial_cam_total_frames} frames)")
+    if initial_cam_duration < MAX_DUR:
+        print(f"   ⚠️  Warning: Source video ({initial_cam_duration:.1f}s) is shorter than target ({MAX_DUR}s)")
+        print(f"   Video will loop to reach target duration")
 if ENABLE_HIGHLIGHT_LOGGING:
     _highlight_log("Starting highlight video generation", "INFO")
     _highlight_log(f"Starting camera: {initial_cam} ({CAMERA_NAMES.get(initial_cam, 'Unknown')})", "INFO")
+    _highlight_log(f"Target: {target_frames} frames ({MAX_DUR}s @ {output_fps:.2f} fps)", "INFO")
 
+# ------------------------------
+# MAIN OUTPUT LOOP
+# ------------------------------
 try:
     while True:
-        elapsed = time.time() - start_time
-        if elapsed >= MAX_DUR:
-            print(f"\n📊 Reached MAX_DUR limit ({MAX_DUR}s). Stopping.")
+        # Stop when we've written the exact number of frames for the target duration
+        # This ensures output video is exactly MAX_DUR seconds regardless of processing speed
+        if written_frames >= target_frames:
+            print(f"\n📊 Reached target frame count ({target_frames} frames = {MAX_DUR}s). Stopping.")
             if ENABLE_HIGHLIGHT_LOGGING:
-                _highlight_log(f"Reached MAX_DUR limit: {MAX_DUR}s", "INFO")
+                _highlight_log(f"Reached target frame count: {target_frames} frames ({MAX_DUR}s)", "INFO")
             break
 
         global_frame_idx += 1
@@ -10303,10 +10535,46 @@ try:
             continue
 
         if not ok:
-            print(f"📹 End of video on camera {active_cam} ({CAMERA_NAMES[active_cam]}). Stopping.")
-            if ENABLE_HIGHLIGHT_LOGGING:
-                _highlight_log(f"End of video on camera {active_cam}", "INFO")
-            break
+            # Video ended - loop back to beginning if we haven't reached target duration
+            if written_frames < target_frames:
+                # Seek back to skip position to loop the video
+                try:
+                    # Get the skip position for this camera
+                    if 'reference_skip_frames' in locals():
+                        loop_start_frame = reference_skip_frames
+                    else:
+                        loop_start_frame = skip_frames_map.get(active_cam, 0)
+                    
+                    cap.set(cv2.CAP_PROP_POS_FRAMES, loop_start_frame)
+                    # Try reading again
+                    ok, frame = cap.read()
+                    if ok:
+                        if ENABLE_HIGHLIGHT_LOGGING and global_frame_idx % 300 == 0:  # Log occasionally
+                            _highlight_log(f"Video looped on camera {active_cam} (written={written_frames}/{target_frames})", "INFO")
+                        # Continue with the looped frame - don't break
+                    else:
+                        # Can't loop - video might be too short or corrupted
+                        print(f"📹 End of video on camera {active_cam} ({CAMERA_NAMES[active_cam]}). Cannot loop. Stopping.")
+                        print(f"   Written: {written_frames}/{target_frames} frames ({written_frames/output_fps:.1f}s / {MAX_DUR:.1f}s)")
+                        if ENABLE_HIGHLIGHT_LOGGING:
+                            _highlight_log(f"End of video on camera {active_cam} - cannot loop (written={written_frames}/{target_frames})", "WARNING")
+                        break
+                except Exception as e:
+                    print(f"⚠️  Error looping video on camera {active_cam}: {e}. Stopping.")
+                    print(f"   Written: {written_frames}/{target_frames} frames ({written_frames/output_fps:.1f}s / {MAX_DUR:.1f}s)")
+                    if ENABLE_HIGHLIGHT_LOGGING:
+                        _highlight_log(f"Error looping video on camera {active_cam}: {e}", "ERROR")
+                    break
+            else:
+                # We've reached target duration, stop normally
+                print(f"📹 End of video on camera {active_cam} ({CAMERA_NAMES[active_cam]}). Target reached. Stopping.")
+                if ENABLE_HIGHLIGHT_LOGGING:
+                    _highlight_log(f"End of video on camera {active_cam} - target reached", "INFO")
+                break
+        
+        # Skip processing if frame is None (shouldn't happen, but safety check)
+        if frame is None:
+            continue
 
         # PERFORMANCE OPTIMIZATION: Sync cameras less frequently (every 30 frames = ~1 second @ 30fps)
         # This reduces overhead while maintaining synchronization
@@ -10343,196 +10611,11 @@ try:
                     'cls': None, 'meta': {"error": str(e)}
                 })()
 
-        # Track last frame when ball was found (for fallback scanning)
-        ball_found = (det.bbox is not None and det.conf >= FALLBACK_SCAN_MIN_CONF)
-        if ball_found:
-            last_ball_found_frame = global_frame_idx
-        elif 'last_ball_found_frame' not in locals():
-            last_ball_found_frame = global_frame_idx  # Initialize on first frame
-
-        # ---- Enhanced Fallback camera scanning (when ball lost for too long) ----
-        # Priority: When middle camera loses ball, check side cameras first for better visibility
-        frames_since_ball_found = global_frame_idx - last_ball_found_frame
-        fallback_switch_occurred = False
-
-        # IMPROVEMENT: Check if ball was near exit zone before fallback scanning
-        # This prevents false switches when ball is in center field but temporarily occluded
-        ball_was_near_zone = False
-        if hasattr(camera_switcher, 'pos_hist') and len(camera_switcher.pos_hist) > 0:
-            last_pos = camera_switcher.pos_hist[-1]
-            if last_pos:
-                x, y = last_pos
-                zones = EXIT_ZONES.get(active_cam, {})
-                for zone_name, (x1, y1, x2, y2) in zones.items():
-                    # Check if ball was near any exit zone (with proximity threshold)
-                    if (x1 - FALLBACK_ZONE_PROXIMITY_THRESHOLD <= x <= x2 + FALLBACK_ZONE_PROXIMITY_THRESHOLD and
-                        y1 - FALLBACK_ZONE_PROXIMITY_THRESHOLD <= y <= y2 + FALLBACK_ZONE_PROXIMITY_THRESHOLD):
-                        ball_was_near_zone = True
-                        break
-
-        # PERFORMANCE OPTIMIZATION: Disable fallback scanning for highlight generation
+        # PERFORMANCE OPTIMIZATION: Fallback scanning removed for highlight generation
         # Fallback scanning is expensive (detects ball on all cameras) and less critical for highlights
-        ENABLE_FALLBACK_FOR_HIGHLIGHT = False  # Set to True to enable fallback scanning in highlights
-        
-        if (ENABLE_FALLBACK_SCAN and ENABLE_FALLBACK_FOR_HIGHLIGHT and
-            frames_since_ball_found >= FALLBACK_SCAN_TIMEOUT_FRAMES and
-            not camera_switcher.is_cooldown_active() and
-            ball_was_near_zone):  # Only scan if ball was near exit zone (prevents center-field false switches)
+        # Main switching logic handles normal camera transitions efficiently
 
-            # Identify camera types for priority-based scanning
-            current_cam_name = CAMERA_NAMES.get(active_cam, "").upper()
-            is_middle_cam = 'MIDDLE' in current_cam_name or 'CENTER' in current_cam_name
-
-            # Find side cameras (Left and Right) for priority scanning
-            side_cam_ids = []
-            other_cam_ids = []
-
-            for cid in CAMERA_MAP.keys():
-                if cid == active_cam:
-                    continue
-                cam_name = CAMERA_NAMES.get(cid, "").upper()
-                if 'LEFT' in cam_name or 'RIGHT' in cam_name:
-                    side_cam_ids.append(cid)
-                else:
-                    other_cam_ids.append(cid)
-
-            # Priority order: If coming from middle camera, scan side cameras first
-            # Otherwise, scan all cameras equally
-            if is_middle_cam and side_cam_ids:
-                scan_order = side_cam_ids + other_cam_ids
-                if ENABLE_ORCHESTRATOR_LOGGING:
-                    _orch_log(f"FALLBACK_SCAN: Middle camera lost ball, prioritizing side cameras: {side_cam_ids}", "INFO")
-            else:
-                scan_order = side_cam_ids + other_cam_ids
-
-            # If no specific order needed, use all other cameras
-            if not scan_order:
-                scan_order = [cid for cid in CAMERA_MAP.keys() if cid != active_cam]
-
-            best_other_cam = None
-            best_other_conf = 0.0
-            camera_visibilities = {}  # Track visibility scores for all cameras
-
-            for other_cam_id in scan_order:
-                other_cap = caps_out.get(other_cam_id)  # FIX: Use caps_out for highlight generation
-                if other_cap is None:
-                    continue
-
-                # Get current frame position of active camera
-                try:
-                    active_frame_pos = int(cap.get(cv2.CAP_PROP_POS_FRAMES))
-                    # Seek other camera to same relative position
-                    other_cap.set(cv2.CAP_PROP_POS_FRAMES, active_frame_pos)
-                    ok, other_frame = other_cap.read()
-
-                    if ok and other_frame is not None:
-                        # Detect ball in other camera
-                        try:
-                            other_det = detect_ball(other_frame)
-                            if other_det.bbox is not None and other_det.conf >= FALLBACK_SCAN_MIN_CONF:
-                                # Track visibility for all cameras
-                                camera_visibilities[other_cam_id] = other_det.conf
-
-                                # Update best camera based on confidence
-                                # If coming from middle camera, prefer side cameras with same confidence
-                                is_side_cam = other_cam_id in side_cam_ids
-                                current_best_is_side = best_other_cam in side_cam_ids if best_other_cam is not None else False
-
-                                should_update = False
-                                if best_other_cam is None:
-                                    should_update = True
-                                elif is_middle_cam:
-                                    # Priority: Side cameras preferred when coming from middle
-                                    if is_side_cam and not current_best_is_side:
-                                        should_update = True  # Prefer side camera
-                                    elif (is_side_cam == current_best_is_side) and other_det.conf > best_other_conf:
-                                        should_update = True  # Same type, higher confidence
-                                    elif not is_side_cam and current_best_is_side:
-                                        should_update = False  # Don't replace side with non-side
-                                    elif not is_side_cam and other_det.conf > best_other_conf + 0.1:
-                                        should_update = True  # Non-side only if significantly better
-                                else:
-                                    # Normal priority: highest confidence wins
-                                    if other_det.conf > best_other_conf:
-                                        should_update = True
-
-                                if should_update:
-                                    best_other_cam = other_cam_id
-                                    best_other_conf = other_det.conf
-                        except Exception as e:
-                            if ENABLE_ORCHESTRATOR_LOGGING:
-                                _orch_log(f"Error detecting ball in camera {other_cam_id} during fallback scan: {e}", "WARNING")
-                except Exception as e:
-                    if ENABLE_ORCHESTRATOR_LOGGING:
-                        _orch_log(f"Error reading from camera {other_cam_id} during fallback scan: {e}", "WARNING")
-
-            # Switch to camera with best ball visibility
-            # Prefers side cameras when coming from middle camera
-            if best_other_cam is not None:
-                old_cam = active_cam
-                active_cam = best_other_cam
-                
-                # CRITICAL FIX: Update camera_switcher's internal state to match
-                # Otherwise, the switcher will reset active_cam on the next frame
-                try:
-                    camera_switcher.update_active_camera(best_other_cam, global_frame_idx)
-                except Exception as e:
-                    if ENABLE_HIGHLIGHT_LOGGING:
-                        _highlight_log(f"Warning: Error updating camera_switcher state: {e}", "WARNING")
-                
-                _orch_stats["phase1"]["switches"] += 1
-                _highlight_stats["processing"]["switches"] += 1
-
-                switch_event = {
-                    "frame": global_frame_idx,
-                    "from_cam": old_cam,
-                    "to_cam": active_cam,
-                    "zone": "FALLBACK_SCAN",
-                    "exit_prob": best_other_conf,
-                    "reason": f"ball_lost_{frames_since_ball_found}_frames_found_in_other_cam"
-                }
-                _orch_stats["phase1"]["switch_events"].append(switch_event)
-                _highlight_stats["processing"]["switch_events"].append(switch_event)
-
-                # Log visibility scores if multiple cameras detected ball
-                visibility_info = f"conf={best_other_conf:.2f}"
-                if len(camera_visibilities) > 1:
-                    vis_scores = ", ".join([f"{CAMERA_NAMES.get(cid, cid)}={conf:.2f}"
-                                            for cid, conf in sorted(camera_visibilities.items(), key=lambda x: x[1], reverse=True)])
-                    visibility_info += f" (all: {vis_scores})"
-
-                print(f"\n🔄 FALLBACK SWITCH at frame={global_frame_idx:06d}: "
-                      f"{CAMERA_NAMES[old_cam]} -> {CAMERA_NAMES[active_cam]} "
-                      f"(ball lost for {frames_since_ball_found} frames, {visibility_info})")
-
-                if ENABLE_ORCHESTRATOR_LOGGING:
-                    _orch_log(f"FALLBACK_SWITCH: frame={global_frame_idx}, {old_cam}->{active_cam}, "
-                             f"lost_for={frames_since_ball_found}frames, conf={best_other_conf:.2f}, visibilities={camera_visibilities}", "INFO")
-                if ENABLE_HIGHLIGHT_LOGGING:
-                    _highlight_log(f"FALLBACK_SWITCH: frame={global_frame_idx}, {old_cam}->{active_cam}, "
-                                 f"lost_for={frames_since_ball_found}frames, conf={best_other_conf:.2f}", "INFO")
-
-                # Reset sticky tracker and update last_ball_found_frame
-                # Maintain sticky tracking behavior during transitions
-                try:
-                    sticky_tracker.reset()
-                except Exception as e:
-                    if ENABLE_ORCHESTRATOR_LOGGING:
-                        _orch_log(f"Warning: Error resetting sticky tracker: {e}", "WARNING")
-
-                last_ball_found_frame = global_frame_idx
-                fallback_switch_occurred = True
-
-                # Initialize camera usage for new camera
-                if active_cam not in _orch_stats["phase1"]["camera_usage"]:
-                    _orch_stats["phase1"]["camera_usage"][active_cam] = 0
-                if active_cam not in _highlight_stats["processing"]["camera_usage"]:
-                    _highlight_stats["processing"]["camera_usage"][active_cam] = 0
-
-                # Skip normal switching decision for this frame (already switched)
-                continue
-
-        # ---- Camera switching decision (only if no fallback switch occurred) ----
+        # ---- Camera switching decision ----
 
         try:
             decision = camera_switcher.update(
@@ -10638,6 +10721,7 @@ try:
                     "LEFT": (0, 0, 255), "LEFT_TOP": (0, 100, 255), "LEFT_BOTTOM": (0, 150, 255),
                     "RIGHT": (255, 0, 0), "RIGHT_TOP": (255, 100, 0), "RIGHT_BOTTOM": (255, 150, 0),
                     "TOP": (255, 255, 0), "BOTTOM": (255, 0, 255),
+                    "EQUAL": (0, 255, 255),  # Cyan for center/equal zone
                 }
                 for zone_name, (x_min, y_min, x_max, y_max) in zones.items():
                     x1, y1 = int(x_min * w), int(y_min * h)
@@ -10660,9 +10744,15 @@ try:
 
         # Enhanced overlay with better formatting
         overlay_y = 30
+        # Calculate video time based on frames written (not processing time)
+        # Use current camera's FPS for accurate time calculation
+        current_cam_fps = fps_map_out.get(active_cam, OUTPUT_FPS_FALLBACK)
+        video_time_sec = written_frames / current_cam_fps if current_cam_fps > 0 else 0
+        processing_time_elapsed = time.time() - start_time
+        
         overlay_texts = [
             f"Frame: {global_frame_idx} | Camera: {CAMERA_NAMES[active_cam]}",
-            f"Time: {elapsed:5.1f}s / {MAX_DUR:.0f}s | Skip: {SKIP_SECONDS/60:.1f}m"
+            f"Video: {video_time_sec:5.1f}s / {MAX_DUR:.0f}s | Processing: {processing_time_elapsed:5.1f}s"
         ]
 
         for i, text in enumerate(overlay_texts):
@@ -10702,20 +10792,28 @@ try:
                 _highlight_log(f"Error writing frame: {e}", "ERROR")
 
         # ---- Progress logging ----
+        # Use video time (frames/FPS) instead of processing time for accurate progress
         current_time = time.time()
         if current_time - last_progress_log >= PROGRESS_LOG_EVERY_N_SEC:
-            progress_pct = (elapsed / MAX_DUR * 100) if MAX_DUR > 0 else 0
+            # Calculate video time based on frames written and FPS (use current camera's FPS)
+            current_cam_fps = fps_map_out.get(active_cam, OUTPUT_FPS_FALLBACK)
+            video_time_sec = written_frames / current_cam_fps if current_cam_fps > 0 else 0
+            progress_pct = (written_frames / target_frames * 100) if target_frames > 0 else 0
+            processing_time_elapsed = current_time - start_time
+            
             progress_info = (
-                f"⏱️  {elapsed:6.1f}s / {MAX_DUR:.0f}s ({progress_pct:5.1f}%) | "
-                f"frames={global_frame_idx} | written={written_frames} | "
+                f"⏱️  Video: {video_time_sec:6.1f}s / {MAX_DUR:.0f}s ({progress_pct:5.1f}%) | "
+                f"Processing: {processing_time_elapsed:6.1f}s | "
+                f"frames={global_frame_idx} | written={written_frames}/{target_frames} | "
                 f"cam={active_cam} ({CAMERA_NAMES[active_cam]}) | "
                 f"switches={_highlight_stats['processing']['switches']}"
             )
             print(progress_info)
 
             if ENABLE_HIGHLIGHT_LOGGING:
-                _highlight_log(f"Progress: {elapsed:.1f}s/{MAX_DUR:.0f}s, {global_frame_idx} frames, "
-                             f"{written_frames} written, {_highlight_stats['processing']['switches']} switches", "INFO")
+                _highlight_log(f"Progress: {video_time_sec:.1f}s/{MAX_DUR:.0f}s video, {processing_time_elapsed:.1f}s processing, "
+                             f"{global_frame_idx} frames, {written_frames}/{target_frames} written, "
+                             f"{_highlight_stats['processing']['switches']} switches", "INFO")
 
             last_progress_log = current_time
 
@@ -10773,11 +10871,23 @@ print("✅ HIGHLIGHT GENERATION COMPLETE")
 print("=" * 50)
 
 print(f"\n📈 Processing Summary:")
-print(f"   Frames written: {written_frames}")
+print(f"   Frames written: {written_frames} / {target_frames} (target)")
+# Use the output FPS that was actually used (from initial camera or writer initialization)
+final_output_fps = fps_map_out.get(initial_cam, OUTPUT_FPS_FALLBACK)
+if 'writer' in locals() and writer is not None:
+    # Try to get FPS from writer if available
+    try:
+        writer_fps = writer.get(cv2.CAP_PROP_FPS) if hasattr(writer, 'get') else None
+        if writer_fps and writer_fps > 0:
+            final_output_fps = writer_fps
+    except:
+        pass
+video_duration = written_frames / final_output_fps if final_output_fps > 0 else 0
+print(f"   Video duration: {video_duration:.2f} seconds (target: {MAX_DUR}s)")
 print(f"   Processing time: {processing_time:.1f} seconds ({processing_time/60:.1f} minutes)")
 if processing_time > 0:
-    output_fps = written_frames / processing_time
-    print(f"   Output speed: {output_fps:.1f} fps")
+    processing_fps = written_frames / processing_time
+    print(f"   Processing speed: {processing_fps:.1f} fps")
 print(f"   Camera switches: {_highlight_stats['processing']['switches']}")
 if errors > 0:
     print(f"   Errors: {errors}")
